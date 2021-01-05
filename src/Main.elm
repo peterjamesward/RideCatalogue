@@ -168,12 +168,13 @@ imageButton description imageUrl linkUrl =
                                 }
                         }
             }
-        , el
+        , paragraph
             [ Font.size 20
             , Font.color silver
             , centerX
+            , width (px 200)
             ]
-            (text description)
+            [ text description ]
         ]
 
 
@@ -195,10 +196,11 @@ textButton description linkUrl =
                 paragraph [ Font.color sunFlower, Font.size 32 ]
                     [ el [ centerX ] <| text description ]
             }
-        , el
+        , paragraph
             [ Font.size 20
             , Font.color silver
             , centerX
+            , width (px 200)
             ]
-            (text description)
+            [ text description ]
         ]
