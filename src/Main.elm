@@ -113,8 +113,7 @@ homeScreen model =
 
             NotFound ->
                 contentSection model
-        , text "The current URL is: "
-        , text (Url.toString model.url)
+        , text <| "The current URL is: " ++ Url.toString model.url
         ]
 
 

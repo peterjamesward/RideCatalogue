@@ -4,7 +4,7 @@ import Element exposing (Element, centerX, clipY, fill, height, html, padding, p
 import Element.Background as Background
 import Element.Font as Font
 import FlatColors.FlatUIPalette exposing (silver, wetAsphalt)
-import Markdown
+import Markdown exposing (Options)
 import Msg exposing (Msg)
 
 viewMarkdown : Element Msg
@@ -23,8 +23,16 @@ viewMarkdown =
             , Font.color silver
             ]
           <|
-            [ html <| Markdown.toHtml [] stepwiseRefinement ]
+            [ html <| Markdown.toHtmlWith myOptions [] stepwiseRefinement ]
         ]
+
+myOptions : Options
+myOptions =
+    { githubFlavored = Just { tables = True, breaks = False }
+    , defaultHighlighting = Just "elm"
+    , sanitize = True
+    , smartypants = True
+    }
 
 stepwiseRefinement =
     """
@@ -32,8 +40,8 @@ stepwiseRefinement =
 
 In 1971, Niklaus Wirth wrote a classic paper, [Program Development by Stepwise Refinement](http://sunnyday.mit.edu/16.355/wirth-refinement.html)[^Communications of the ACM, Vol. 14, No. 4, April 1971]. The last of four conclusions he reached is
 
-Four
-:  The detailed elaborations on the development of even a short program form a long story, indicating that careful programming is not a trivial subject. If this paper has helped to dispel the widespread belief that programming is easy as long as the programming language is powerful enough and the available computer is fast enough, then it has achieved one of its purposes.
+## Four
+> The detailed elaborations on the development of even a short program form a long story, indicating that careful programming is not a trivial subject. If this paper has helped to dispel the widespread belief that programming is easy as long as the programming language is powerful enough and the available computer is fast enough, then it has achieved one of its purposes.
 
 Here at Stepwise Refinement, we feel that this applies to the design of any complex system. A good design should exhibit overall integrity and clarity of purpose. The integrity of the final solution arises because of a traceable series of elaborations that deal with specific challenges, perhaps around implementation choices or interaction with the environment. It is not just the result of these deliberations that needs to be conveyed, but the _story of their making_.
 
