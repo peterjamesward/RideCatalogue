@@ -119,7 +119,7 @@ homeScreen model =
 
 contentSection model =
     wrappedRow [ centerY, centerX, padding 100, spacing 100 ]
-        [ textButton "About Stepwise Refinement"
+        [ textButton "Stepwise Refinement"
             (Builder.relative [ "about" ] [])
         , imageButton "Chain Home"
             (Builder.relative [ "images", "ChainHome.png" ] [])
@@ -182,18 +182,17 @@ textButton : String -> String -> Element Msg
 textButton description linkUrl =
     column [ spacing 10 ]
         [ link
-            [ padding 3
-            , Border.rounded 9
+            [ Border.rounded 9
             , Border.width 3
             , Border.color silver
             , Background.color amethyst
-            , width <| px 200
-            , height <| px 200
+            , width <| px 212
+            , height <| px 212
             , mouseOver [ alpha 0.7 ]
             ]
             { url = linkUrl
             , label =
-                paragraph [ Font.color sunFlower, Font.size 32 ]
+                paragraph [ Font.color sunFlower, Font.size 32, padding 5 ]
                     [ el [ centerX ] <| text description ]
             }
         , paragraph
