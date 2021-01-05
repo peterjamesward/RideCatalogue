@@ -1,18 +1,23 @@
 module Main exposing (..)
 
 import Browser exposing (application)
+import Browser.Navigation as Nav
 import Element exposing (Element, alignRight, alpha, centerX, centerY, clip, column, el, fill, height, image, layout, link, mouseOver, padding, paragraph, px, rgb255, row, spacing, text, width, wrappedRow)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import FlatColors.FlatUIPalette exposing (concrete, silver, wetAsphalt)
+import FlatColors.FlatUIPalette exposing (amethyst, concrete, silver, sunFlower, wetAsphalt)
+import Msg exposing (Msg(..))
+import Refinement exposing (stepwiseRefinement, viewMarkdown)
 import Url exposing (Url)
 import Url.Builder as Builder
+import Url.Parser exposing (Parser, map, oneOf, parse, s, top)
 
 
 type alias Model =
-    { title : String
+    { key : Nav.Key
+    , url : Url.Url
     }
 
 
@@ -20,67 +25,116 @@ type alias Flags =
     ()
 
 
-type Msg
-    = Clicked
-
-
-init : Flags -> ( Model, Cmd Msg )
-init _ =
-    ( { title = "Stepwise Refinement Ltd" }, Cmd.none )
+init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init flags url key =
+    ( Model key url, Cmd.none )
 
 
 main : Program Flags Model Msg
 main =
-    Browser.document
+    Browser.application
         { init = init
-        , update = update
         , view = view
+        , update = update
         , subscriptions = subscriptions
+        , onUrlChange = UrlChanged
+        , onUrlRequest = LinkClicked
         }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        LinkClicked urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model, Nav.pushUrl model.key (Url.toString url) )
+
+                Browser.External href ->
+                    ( model, Nav.load href )
+
+        UrlChanged url ->
+            ( { model | url = url }
+            , Cmd.none
+            )
 
 
 logoImage =
-    el
+    --TODO: Make this the Home link.
+    link
         [ Font.size 64
         , Font.color concrete
         ]
-    <|
-        text "Stepwise Refinement Ltd"
+        { url = Builder.relative [ "index.html" ] []
+        , label = text "Stepwise Refinement Ltd"
+        }
 
 
 view : Model -> Browser.Document Msg
 view model =
     { title = "Stepwise Refinement Ltd"
     , body =
-        [ layout
-            [ Background.color wetAsphalt
-            , width fill
-            ]
-          <|
-            column [ padding 50, height fill, width fill ]
-                [ logoImage
-                , wrappedRow [ centerY, centerX, padding 100, spacing 100 ]
-                    [ imageButton "Chain Home"
-                        "/images/ChainHome.png"
-                        (Builder.crossOrigin "https://storage.googleapis.com"
-                            [ "chainhome", "index.html" ]
-                            []
-                        )
-                    , imageButton "GPXmagic"
-                        "/images/GPXmagic.png"
-                        (Builder.crossOrigin "https://www.stepwiserefinement.co.uk"
-                            [ "GPXmagic", "index.html" ]
-                            []
-                        )
-                    ]
-                ]
+        [ layout [ Background.color wetAsphalt, width fill ]
+            (homeScreen model)
         ]
     }
+
+
+type Route
+    = Home
+    | About
+    | NotFound
+
+
+route : Parser (Route -> a) a
+route =
+    oneOf
+        [ map Home top
+        , map Home (s "home")
+        , map About (s "about")
+        ]
+
+
+toRoute : Url -> Route
+toRoute url =
+    Maybe.withDefault NotFound (parse route url)
+
+
+homeScreen : Model -> Element Msg
+homeScreen model =
+    column [ padding 50, height fill, width fill ]
+        [ logoImage
+        , case toRoute model.url of
+            Home ->
+                contentSection model
+
+            About ->
+                viewMarkdown
+
+            NotFound ->
+                contentSection model
+        , text "The current URL is: "
+        , text (Url.toString model.url)
+        ]
+
+
+contentSection model =
+    wrappedRow [ centerY, centerX, padding 100, spacing 100 ]
+        [ textButton "About Stepwise Refinement"
+            (Builder.relative [ "about" ] [])
+        , imageButton "Chain Home"
+            (Builder.relative [ "images", "ChainHome.png" ] [])
+            (Builder.crossOrigin "http://storage.googleapis.com"
+                [ "chainhome", "index.html" ]
+                []
+            )
+        , imageButton "GPXmagic"
+            (Builder.relative [ "images", "GPXmagic.png" ] [])
+            (Builder.crossOrigin "http://www.stepwiserefinement.co.uk"
+                [ "GPXmagic", "index.html" ]
+                []
+            )
+        ]
 
 
 subscriptions : Model -> Sub Msg
@@ -114,6 +168,33 @@ imageButton description imageUrl linkUrl =
                                 , description = description
                                 }
                         }
+            }
+        , el
+            [ Font.size 20
+            , Font.color silver
+            , centerX
+            ]
+            (text description)
+        ]
+
+
+textButton : String -> String -> Element Msg
+textButton description linkUrl =
+    column [ spacing 10 ]
+        [ link
+            [ padding 3
+            , Border.rounded 9
+            , Border.width 3
+            , Border.color silver
+            , Background.color amethyst
+            , width <| px 200
+            , height <| px 200
+            , mouseOver [ alpha 0.7 ]
+            ]
+            { url = linkUrl
+            , label =
+                paragraph [ Font.color sunFlower, Font.size 32 ]
+                    [ el [ centerX ] <| text description ]
             }
         , el
             [ Font.size 20
