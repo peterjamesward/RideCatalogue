@@ -2,12 +2,15 @@ module Main exposing (..)
 
 import Browser exposing (application)
 import Browser.Navigation as Nav
-import Element exposing (Element, alignRight, alpha, centerX, centerY, clip, column, el, fill, height, image, layout, link, mouseOver, padding, paragraph, px, rgb255, row, spacing, text, width, wrappedRow)
+import Element as E exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import FlatColors.FlatUIPalette exposing (amethyst, concrete, silver, sunFlower, wetAsphalt)
+import Evolving exposing (evolving)
+import FlatColors.FlatUIPalette exposing (amethyst, concrete, orange, silver, sunFlower, wetAsphalt)
+import Html as H exposing (div)
+import Html.Attributes as H exposing (height, id, width)
 import Msg exposing (Msg(..))
 import Refinement exposing (stepwiseRefinement, viewMarkdown)
 import Url exposing (Url)
@@ -60,7 +63,6 @@ update msg model =
 
 
 logoImage =
-    --TODO: Make this the Home link.
     link
         [ Font.size 64
         , Font.color concrete
@@ -74,7 +76,7 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Stepwise Refinement Ltd"
     , body =
-        [ layout [ Background.color wetAsphalt, width fill ]
+        [ layout [ Background.color wetAsphalt, E.width fill ]
             (homeScreen model)
         ]
     }
@@ -83,15 +85,17 @@ view model =
 type Route
     = Home
     | About
+    | Evolve
     | NotFound
 
 
 route : Parser (Route -> a) a
 route =
     oneOf
-        [ map Home top
-        , map Home (s "home")
-        , map About (s "about")
+        [ Url.Parser.map Home top
+        , Url.Parser.map Home (s "home")
+        , Url.Parser.map About (s "about")
+        , Url.Parser.map Evolve (s "evolve")
         ]
 
 
@@ -100,25 +104,37 @@ toRoute url =
     Maybe.withDefault NotFound (parse route url)
 
 
+sponsorMessage2 =
+    el [ Font.size 24, Font.color orange, centerX, padding 50 ] <|
+        text "peter at stepwiserefinement dot co dot uk"
+
+
+
 homeScreen : Model -> Element Msg
 homeScreen model =
-    column [ padding 50, height fill, width fill ]
+    column
+        [ paddingEach { left = 40, right = 40, top = 0, bottom = 40 }
+        , E.width fill
+        ]
         [ logoImage
         , case toRoute model.url of
             Home ->
                 contentSection model
 
             About ->
-                viewMarkdown
+                viewMarkdown stepwiseRefinement
+
+            Evolve ->
+                viewMarkdown evolving
 
             NotFound ->
                 contentSection model
-        , text <| "The current URL is: " ++ Url.toString model.url
+        , sponsorMessage2
         ]
 
 
 contentSection model =
-    wrappedRow [ centerY, centerX, padding 100, spacing 100 ]
+    wrappedRow [ alignTop, centerX, padding 50, spacing 60 ]
         [ textButton "Stepwise Refinement"
             (Builder.relative [ "about" ] [])
         , imageButton "Chain Home"
@@ -127,12 +143,30 @@ contentSection model =
                 [ "chainhome", "index.html" ]
                 []
             )
+            False
         , imageButton "GPXmagic"
             (Builder.relative [ "images", "GPXmagic.png" ] [])
             (Builder.crossOrigin "http://www.stepwiserefinement.co.uk"
                 [ "GPXmagic", "index.html" ]
                 []
             )
+            False
+        , imageButton "Who's using GPXmagic?"
+            (Builder.relative [ "images", "FreeVector-World-Background.jpg" ] [])
+            (Builder.crossOrigin "http://www.stepwiserefinement.co.uk"
+                [ "logExtract", "index.html" ]
+                []
+            )
+            False
+        , imageButton "The Fitness Function"
+            (Builder.relative [ "images", "fitness.png" ] [])
+            (Builder.crossOrigin "https://www.amazon.co.uk"
+                [ "dp", "B08DRBTFY5" ]
+                []
+            )
+            True
+        , textButton "Evolving Software"
+            (Builder.relative [ "evolve" ] [])
         ]
 
 
@@ -141,26 +175,38 @@ subscriptions _ =
     Sub.none
 
 
-imageButton : String -> String -> String -> Element Msg
-imageButton description imageUrl linkUrl =
-    column [ spacing 10 ]
+commonStyles =
+    [ padding 3
+    , E.width <| px 212
+    , E.height <| px 212
+    , mouseOver [ alpha 0.7 ]
+    ]
+
+
+imageButton : String -> String -> String -> Bool -> Element Msg
+imageButton description imageUrl linkUrl newWindow =
+    let
+        linkFn =
+            if newWindow then
+                E.newTabLink
+
+            else
+                E.link
+    in
+    column [ spacing 10, alignTop ]
         [ Input.button
-            [ padding 3
-            , Border.rounded 9
-            , Border.width 3
-            , Border.color silver
-            ]
+            commonStyles
             { onPress = Nothing
             , label =
                 -- The label can be any element, so for example, the button
                 -- can contain an image
                 el [ clip, Border.rounded 6 ] <|
-                    link []
+                    linkFn []
                         { url = linkUrl
                         , label =
                             image
-                                [ width <| px 200
-                                , height <| px 200
+                                [ E.width <| px 200
+                                , E.height <| px 200
                                 , mouseOver [ alpha 0.7 ]
                                 ]
                                 { src = imageUrl
@@ -172,7 +218,7 @@ imageButton description imageUrl linkUrl =
             [ Font.size 20
             , Font.color silver
             , centerX
-            , width (px 200)
+            , E.width (px 200)
             ]
             [ text description ]
         ]
@@ -180,16 +226,9 @@ imageButton description imageUrl linkUrl =
 
 textButton : String -> String -> Element Msg
 textButton description linkUrl =
-    column [ spacing 10 ]
+    column [ spacing 10, alignTop ]
         [ link
-            [ Border.rounded 9
-            , Border.width 3
-            , Border.color silver
-            , Background.color amethyst
-            , width <| px 212
-            , height <| px 212
-            , mouseOver [ alpha 0.7 ]
-            ]
+            commonStyles
             { url = linkUrl
             , label =
                 paragraph [ Font.color sunFlower, Font.size 32, padding 5 ]
@@ -199,7 +238,7 @@ textButton description linkUrl =
             [ Font.size 20
             , Font.color silver
             , centerX
-            , width (px 200)
+            , E.width (px 200)
             ]
             [ text description ]
         ]

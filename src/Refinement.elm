@@ -7,8 +7,8 @@ import FlatColors.FlatUIPalette exposing (silver, wetAsphalt)
 import Markdown exposing (Options)
 import Msg exposing (Msg)
 
-viewMarkdown : Element Msg
-viewMarkdown =
+viewMarkdown : String -> Element Msg
+viewMarkdown str =
     row
         [ centerX
         , Background.color wetAsphalt
@@ -23,7 +23,7 @@ viewMarkdown =
             , Font.color silver
             ]
           <|
-            [ html <| Markdown.toHtmlWith myOptions [] stepwiseRefinement ]
+            [ html <| Markdown.toHtmlWith myOptions [] str ]
         ]
 
 myOptions : Options
