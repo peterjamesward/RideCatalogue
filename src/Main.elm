@@ -8,9 +8,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Evolving exposing (evolving)
-import FlatColors.FlatUIPalette exposing (amethyst, concrete, orange, silver, sunFlower, wetAsphalt)
-import Html as H exposing (div)
-import Html.Attributes as H exposing (height, id, width)
+import FlatColors.FlatUIPalette exposing (..)
 import Msg exposing (Msg(..))
 import Refinement exposing (stepwiseRefinement, viewMarkdown)
 import Url exposing (Url)
@@ -109,7 +107,6 @@ sponsorMessage2 =
         text "peter at stepwiserefinement dot co dot uk"
 
 
-
 homeScreen : Model -> Element Msg
 homeScreen model =
     column
@@ -153,8 +150,8 @@ contentSection model =
             False
         , imageButton "Who's using GPXmagic?"
             (Builder.relative [ "images", "FreeVector-World-Background.jpg" ] [])
-            (Builder.crossOrigin "http://www.stepwiserefinement.co.uk"
-                [ "logExtract", "index.html" ]
+            (Builder.crossOrigin "https://stepwiserefinement.shinyapps.io/dashboard/"
+                []
                 []
             )
             False
@@ -180,6 +177,9 @@ commonStyles =
     , E.width <| px 212
     , E.height <| px 212
     , mouseOver [ alpha 0.7 ]
+    , Border.color FlatColors.FlatUIPalette.asbestos
+    , Border.width 5
+    , Border.rounded 8
     ]
 
 
@@ -231,8 +231,12 @@ textButton description linkUrl =
             commonStyles
             { url = linkUrl
             , label =
-                paragraph [ Font.color sunFlower, Font.size 32, padding 5 ]
-                    [ el [ centerX ] <| text description ]
+                paragraph
+                    [ Font.color sunFlower
+                    , Font.size 32
+                    , padding 5
+                    ]
+                    [ el [ centerX, alignBottom ] <| text description ]
             }
         , paragraph
             [ Font.size 20
