@@ -148,13 +148,13 @@ contentSection model =
                 []
             )
             False
-        --, imageButton "Who's using GPXmagic?"
-        --    (Builder.relative [ "images", "FreeVector-World-Background.jpg" ] [])
-        --    (Builder.crossOrigin "https://stepwiserefinement.shinyapps.io/dashboard/"
-        --        []
-        --        []
-        --    )
-        --    False
+        , imageButton "Who's using GPXmagic?"
+            (Builder.relative [ "images", "FreeVector-World-Background.jpg" ] [])
+            (Builder.crossOrigin "https://stepwiserefinement.shinyapps.io/dashboard/"
+                []
+                []
+            )
+            False
         , imageButton "The Fitness Function"
             (Builder.relative [ "images", "fitness.png" ] [])
             (Builder.crossOrigin "https://www.amazon.co.uk"
