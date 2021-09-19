@@ -127,7 +127,20 @@ homeScreen model =
             NotFound ->
                 contentSection model
         , sponsorMessage2
+        , buyMeACoffeeButton
         ]
+
+
+buyMeACoffeeButton =
+    newTabLink
+        [ centerX ]
+        { url = "https://www.buymeacoffee.com/Peterward"
+        , label =
+            image [ height (px 60), width (px 217) ]
+                { src = "https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                , description = "Buy Me A Coffee"
+                }
+        }
 
 
 contentSection model =
@@ -148,22 +161,6 @@ contentSection model =
                 []
             )
             False
-        , imageButton "Who's using GPXmagic?"
-            (Builder.relative [ "images", "FreeVector-World-Background.jpg" ] [])
-            (Builder.crossOrigin "https://stepwiserefinement.shinyapps.io/dashboard/"
-                []
-                []
-            )
-            False
-        , imageButton "The Fitness Function"
-            (Builder.relative [ "images", "fitness.png" ] [])
-            (Builder.crossOrigin "https://www.amazon.co.uk"
-                [ "dp", "B08DRBTFY5" ]
-                []
-            )
-            True
-        , textButton "Evolving Software"
-            (Builder.relative [ "evolve" ] [])
         ]
 
 
