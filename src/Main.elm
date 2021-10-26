@@ -8,6 +8,8 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Evolving exposing (evolving)
+import FlatColors.BritishPalette
+import FlatColors.ChinesePalette exposing (white)
 import FlatColors.FlatUIPalette exposing (..)
 import Msg exposing (Msg(..))
 import Refinement exposing (stepwiseRefinement, viewMarkdown)
@@ -61,20 +63,20 @@ update msg model =
 
 
 logoImage =
-    link
-        [ Font.size 64
-        , Font.color concrete
-        ]
-        { url = Builder.relative [ "index.html" ] []
-        , label = text "Stepwise Refinement Ltd"
+    image [ width <| px 300 ]
+        { src = "images/white-roundel_background.png"
+        , description = "Gregarios Superclub Ciclista"
         }
 
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = "Stepwise Refinement Ltd"
+    { title = "Ride etiquette (Gregarios Superclub Ciclista)"
     , body =
-        [ layout [ Background.color wetAsphalt, E.width fill ]
+        [ layout
+            [ Background.color wetAsphalt
+            , E.width fill
+            ]
             (homeScreen model)
         ]
     }
@@ -112,21 +114,10 @@ homeScreen model =
     column
         [ paddingEach { left = 40, right = 40, top = 0, bottom = 40 }
         , E.width fill
+        , spaceEvenly
         ]
         [ logoImage
-        , case toRoute model.url of
-            Home ->
-                contentSection model
-
-            About ->
-                viewMarkdown stepwiseRefinement
-
-            Evolve ->
-                viewMarkdown evolving
-
-            NotFound ->
-                contentSection model
-        , sponsorMessage2
+        , contentSection model
         , buyMeACoffeeButton
         ]
 
@@ -143,24 +134,65 @@ buyMeACoffeeButton =
         }
 
 
+
+-- TODO Make content a data structure
+-- TODO Base page displays grid of headings only
+-- TODO Click on heading to display the text in overlay
+-- TODO Click on overlay or other heading to hide or change.
+
+
 contentSection model =
-    wrappedRow [ alignTop, centerX, padding 50, spacing 60 ]
-        [ textButton "Stepwise Refinement"
-            (Builder.relative [ "about" ] [])
-        , imageButton "Chain Home"
-            (Builder.relative [ "images", "ChainHome.png" ] [])
-            (Builder.crossOrigin "http://storage.googleapis.com"
-                [ "chainhome", "index.html" ]
-                []
-            )
-            False
-        , imageButton "GPXmagic"
-            (Builder.relative [ "images", "GPXmagic.png" ] [])
-            (Builder.crossOrigin "http://www.stepwiserefinement.co.uk"
-                [ "GPXmagic", "index.html" ]
-                []
-            )
-            False
+    wrappedRow [ alignTop, centerX, width fill, padding 20, spacing 20 ]
+        [ oneEntry
+            "Riding in Pairs"
+            """Where space (and the Highway Code) allows we ride in two tidy lines.
+               The front positions will change regularly so everyone gets a chance to ride
+                on the front and share the pacemaking."""
+            (Builder.relative [ "images", "pairs.png" ] [])
+        , oneEntry
+            "Stay close"
+            """If you’re in the outside line keep close to the rider alongside and don’t stray into the
+               middle of the road (for obvious reasons!!).
+               Keeping “gruppo compatto” not only looks good, it’s safer,
+               and saves energy by merely riding in the slipstream"""
+            (Builder.relative [ "images", "pairs.png" ] [])
+        , oneEntry
+            "Stay on the tracks"
+            """When riding double hold your line and don’t veer or wobble about.
+            Just imagine you’re on railway tracks holding the same distance
+            between the rider next to you."""
+            (Builder.relative [ "images", "pairs.png" ] [])
+        , oneEntry
+            "Try not to switch lanes or positions"
+            """If the group stops, comes to a junction or roundabout, or singles-out, 
+            always try and resume your position. It’s all about keeping it predictable. 
+            This also enables everyone to have the same opportunity to contribute a 
+            turn on the front with the pacemaking, and no one is popping up anywhere unexpected."""
+            (Builder.relative [ "images", "pairs.png" ] [])
+        , oneEntry
+            "Dummy"
+            """Lorem ipsum"""
+            (Builder.relative [ "images", "pairs.png" ] [])
+        , oneEntry
+            "Dummy"
+            """Lorem ipsum"""
+            (Builder.relative [ "images", "pairs.png" ] [])
+        , oneEntry
+            "Dummy"
+            """Lorem ipsum"""
+            (Builder.relative [ "images", "pairs.png" ] [])
+        , oneEntry
+            "Dummy"
+            """Lorem ipsum"""
+            (Builder.relative [ "images", "pairs.png" ] [])
+        , oneEntry
+            "Dummy"
+            """Lorem ipsum"""
+            (Builder.relative [ "images", "pairs.png" ] [])
+        , oneEntry
+            "Dummy"
+            """Lorem ipsum"""
+            (Builder.relative [ "images", "pairs.png" ] [])
         ]
 
 
@@ -173,73 +205,36 @@ commonStyles =
     [ padding 3
     , E.width <| px 212
     , E.height <| px 212
-    , mouseOver [ alpha 0.7 ]
     , Border.color FlatColors.FlatUIPalette.asbestos
     , Border.width 5
     , Border.rounded 8
     ]
 
 
-imageButton : String -> String -> String -> Bool -> Element Msg
-imageButton description imageUrl linkUrl newWindow =
-    let
-        linkFn =
-            if newWindow then
-                E.newTabLink
-
-            else
-                E.link
-    in
-    column [ spacing 10, alignTop ]
-        [ Input.button
-            commonStyles
-            { onPress = Nothing
-            , label =
-                -- The label can be any element, so for example, the button
-                -- can contain an image
-                el [ clip, Border.rounded 6 ] <|
-                    linkFn []
-                        { url = linkUrl
-                        , label =
-                            image
-                                [ E.width <| px 200
-                                , E.height <| px 200
-                                , mouseOver [ alpha 0.7 ]
-                                ]
-                                { src = imageUrl
-                                , description = description
-                                }
-                        }
-            }
-        , paragraph
-            [ Font.size 20
-            , Font.color silver
-            , centerX
-            , E.width (px 200)
-            ]
-            [ text description ]
+oneEntry : String -> String -> String -> Element Msg
+oneEntry heading description imageUrl =
+    column
+        [ spacing 10
+        , alignTop
+        , width (fill |> minimum 400 |> maximum 500)
+        , Border.color FlatColors.BritishPalette.skirretGreen
+        , Border.width 5
+        , Border.rounded 10
+        , padding 10
         ]
-
-
-textButton : String -> String -> Element Msg
-textButton description linkUrl =
-    column [ spacing 10, alignTop ]
-        [ link
-            commonStyles
-            { url = linkUrl
-            , label =
-                paragraph
-                    [ Font.color sunFlower
-                    , Font.size 32
-                    , padding 5
-                    ]
-                    [ el [ centerX, alignBottom ] <| text description ]
+        [ paragraph [ Font.size 32, Font.color white ] [ text heading ]
+        , image
+            [ E.width <| px 200
+            , centerX
+            ]
+            { src = imageUrl
+            , description = description
             }
         , paragraph
-            [ Font.size 20
+            [ Font.size 24
             , Font.color silver
             , centerX
-            , E.width (px 200)
+            , E.width fill
             ]
             [ text description ]
         ]
