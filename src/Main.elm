@@ -11,19 +11,30 @@ import FlatColors.BritishPalette
 import FlatColors.ChinesePalette exposing (white)
 import FlatColors.FlatUIPalette exposing (..)
 import Markdown
+import Random.List exposing (shuffle)
 import Url exposing (Url)
 import Url.Parser exposing (Parser, map, oneOf, parse, s, top)
+import Random
+import Random.Extra
 
 
 type alias Model =
     { key : Nav.Key
     , url : Url.Url
     , active : Maybe Entry
+    , entries : List Entry
     }
 
 
 type alias Flags =
     ()
+
+type Msg
+    = LinkClicked Browser.UrlRequest
+    | UrlChanged Url.Url
+    | SelectEntry (Maybe Entry)
+    | Randomized (List Entry)
+
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -31,8 +42,9 @@ init flags url key =
     ( { key = key
       , url = url
       , active = Nothing
+      , entries = content
       }
-    , Cmd.none
+    , Random.generate Randomized <| shuffle content
     )
 
 
@@ -46,12 +58,6 @@ main =
         , onUrlChange = UrlChanged
         , onUrlRequest = LinkClicked
         }
-
-
-type Msg
-    = LinkClicked Browser.UrlRequest
-    | UrlChanged Url.Url
-    | SelectEntry (Maybe Entry)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -72,6 +78,11 @@ update msg model =
 
         SelectEntry entry ->
             ( { model | active = entry }
+            , Cmd.none
+            )
+
+        Randomized entries ->
+            ( { model | entries = entries }
             , Cmd.none
             )
 
@@ -143,7 +154,7 @@ homeScreen model =
             , el [ Font.size 32, Font.color white, centerX, padding 50 ] <|
                 text "The Gregarios' guide to ride etiquette"
             ]
-        , contentSection model
+        , contentSection model.entries
         , el [ alignBottom, centerX ] buyMeACoffeeButton
         ]
 
@@ -162,7 +173,6 @@ buyMeACoffeeButton =
 
 
 -- TODO: Randomize!
--- TODO: Graphics in content (easy with markdown).
 
 
 type alias Entry =
@@ -345,9 +355,9 @@ And another on general group riding etiquette
     ]
 
 
-contentSection model =
+contentSection entries =
     wrappedRow [ alignTop, centerX, width fill, padding 20, spacing 20 ] <|
-        List.map entryAsHeading content
+        List.map entryAsHeading entries
 
 
 subscriptions : Model -> Sub Msg
