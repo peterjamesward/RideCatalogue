@@ -10,6 +10,7 @@ import Element.Input as Input
 import FlatColors.BritishPalette
 import FlatColors.ChinesePalette exposing (white)
 import FlatColors.FlatUIPalette exposing (..)
+import Markdown
 import Url exposing (Url)
 import Url.Parser exposing (Parser, map, oneOf, parse, s, top)
 
@@ -137,10 +138,11 @@ homeScreen model =
         , E.height fill
         , spaceEvenly
         ]
-        [ row [width fill, padding 10, spacing 10 ] [logoImage
-        , el [ Font.size 32, Font.color white, centerX, padding 50 ] <|
-                  text "The Gregarios' guide to ride etiquette"
-        ]
+        [ row [ width fill, padding 10, spacing 10 ]
+            [ logoImage
+            , el [ Font.size 32, Font.color white, centerX, padding 50 ] <|
+                text "The Gregarios' guide to ride etiquette"
+            ]
         , contentSection model
         , el [ alignBottom, centerX ] buyMeACoffeeButton
         ]
@@ -159,10 +161,8 @@ buyMeACoffeeButton =
 
 
 
--- TODO Make content a data structure
--- TODO Base page displays grid of headings only
--- TODO Click on heading to display the text in overlay
--- TODO Click on overlay or other heading to hide or change.
+-- TODO: Randomize!
+-- TODO: Graphics in content (easy with markdown).
 
 
 type alias Entry =
@@ -184,7 +184,7 @@ content =
         "Don’t be all over the road"
         """If you’re in the outside line keep close to the rider alongside and don’t stray
         into the middle of the road (for obvious reasons!!).
-        Keeping “gruppo compatto” not only looks good, 
+        Keeping _gruppo compatto_ not only looks good,
         it’s safer, and saves energy by merely riding in the slipstream"""
         "pairs.png"
     , Entry
@@ -332,15 +332,15 @@ content =
         ""
     , Entry
         "The three most important things to remember…"
-        """be predictable
-        be predictable!
-        be predictable!!
+        """- be predictable
+- be predictable!
+- be predictable!!
 
-        Here is a useful video about Group Riding
-        https://www.youtube.com/watch?v=WL3RmtAlVM0
+Here is a useful video about Group Riding
+> https://www.youtube.com/watch?v=WL3RmtAlVM0
 
-        And another on general group riding etiquette
-        https://www.youtube.com/watch?v=ODmB9LyYzKM&t"""
+And another on general group riding etiquette
+> https://www.youtube.com/watch?v=ODmB9LyYzKM&t"""
         ""
     ]
 
@@ -410,6 +410,6 @@ entryDetail entry =
                     , padding 10
                     , Font.color white
                     ]
-                    [ text entry.content ]
+                    [ html <| Markdown.toHtml [] entry.content ]
                 ]
         }
