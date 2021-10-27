@@ -10,18 +10,21 @@ import Element.Input as Input
 import FlatColors.BritishPalette
 import FlatColors.ChinesePalette exposing (white)
 import FlatColors.FlatUIPalette exposing (..)
+import Html exposing (Html)
 import Markdown
+import Random
 import Random.List exposing (shuffle)
 import Url exposing (Url)
 import Url.Parser exposing (Parser, map, oneOf, parse, s, top)
-import Random
-import Random.Extra
+
+
+
+--TODO: Change to use simpler Elm model.
+--TODO: See if we can host on WebMate.me
 
 
 type alias Model =
-    { key : Nav.Key
-    , url : Url.Url
-    , active : Maybe Entry
+    { active : Maybe Entry
     , entries : List Entry
     }
 
@@ -29,53 +32,33 @@ type alias Model =
 type alias Flags =
     ()
 
+
 type Msg
-    = LinkClicked Browser.UrlRequest
-    | UrlChanged Url.Url
-    | SelectEntry (Maybe Entry)
+    = SelectEntry (Maybe Entry)
     | Randomized (List Entry)
 
 
-
-init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init flags url key =
-    ( { key = key
-      , url = url
-      , active = Nothing
+init : () -> ( Model, Cmd Msg )
+init _ =
+    ( { active = Nothing
       , entries = content
       }
     , Random.generate Randomized <| shuffle content
     )
 
 
-main : Program Flags Model Msg
 main =
-    Browser.application
+    Browser.element
         { init = init
-        , view = view
         , update = update
         , subscriptions = subscriptions
-        , onUrlChange = UrlChanged
-        , onUrlRequest = LinkClicked
+        , view = view
         }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        LinkClicked urlRequest ->
-            case urlRequest of
-                Browser.Internal url ->
-                    ( model, Nav.pushUrl model.key (Url.toString url) )
-
-                Browser.External href ->
-                    ( model, Nav.load href )
-
-        UrlChanged url ->
-            ( { model | url = url }
-            , Cmd.none
-            )
-
         SelectEntry entry ->
             ( { model | active = entry }
             , Cmd.none
@@ -94,24 +77,20 @@ logoImage =
         }
 
 
-view : Model -> Browser.Document Msg
+view : Model -> Html Msg
 view model =
-    { title = "Ride etiquette (Gregarios Superclub Ciclista)"
-    , body =
-        [ layout
-            [ Background.color wetAsphalt
-            , E.width fill
-            , inFront <|
-                case model.active of
-                    Just entry ->
-                        entryDetail entry
+    layout
+        [ Background.color wetAsphalt
+        , E.width fill
+        , inFront <|
+            case model.active of
+                Just entry ->
+                    entryDetail entry
 
-                    Nothing ->
-                        none
-            ]
-            (homeScreen model)
+                Nothing ->
+                    none
         ]
-    }
+        (homeScreen model)
 
 
 type Route
@@ -169,10 +148,6 @@ buyMeACoffeeButton =
                 , description = "Buy Me A Coffee"
                 }
         }
-
-
-
--- TODO: Randomize!
 
 
 type alias Entry =
