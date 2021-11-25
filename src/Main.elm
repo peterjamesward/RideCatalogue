@@ -97,12 +97,13 @@ view model =
 
 
 notes =
-    column [ spacing 10, centerX, padding 20 ]
-        [ text "Most cycling clubs now feature “half-wheeling” as the Number One thing not to do on a group ride. "
-        , text "The Gregarios were one of the very first clubs to feature a Ride Etiquette Page on a club website. "
-        , text "Much of our Etiquette content has been adopted by other clubs up and down the country."
-        , text "Our Paceline and Chaingang instructions have been copied by many clubs."
-        ]
+    column [ spacing 10, centerX, padding 20 ] <|
+        List.map (paragraph [] << List.singleton)
+            [ text "Most cycling clubs now feature “half-wheeling” as the Number One thing not to do on a group ride. "
+            , text "The Gregarios were one of the very first clubs to feature a Ride Etiquette Page on a club website. "
+            , text "Much of our Etiquette content has been adopted by other clubs up and down the country."
+            , text "Our Paceline and Chaingang instructions have been copied by many clubs."
+            ]
 
 
 type Route
