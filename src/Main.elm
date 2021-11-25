@@ -83,7 +83,7 @@ view model =
         , inFront <|
             case model.active of
                 Just entry ->
-                    el [ centerX, centerY ] <|
+                    el [ centerX, centerY, scrollbarY ] <|
                         entryDetail entry
 
                 Nothing ->
@@ -393,7 +393,7 @@ entryDetail entry =
     -- Try to get tricolore border.
     tricolore 5 <|
         Input.button
-            [ width (fill |> minimum 400 |> maximum 500)
+            [ width (fill |> maximum 500)
             ]
             { onPress = Just <| SelectEntry Nothing
             , label =
