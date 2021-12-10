@@ -155,7 +155,6 @@ content =
         """Where space allows we ride in two tidy lines. 
 The front positions will change regularly so everyone gets a chance to ride on the front
 and share the pace-making.
-[This video](https://www.youtube.com/watch?v=-9upR9r2_uQ) has a great explanation of how we rotate positions.
         """
     , Entry
         "Don’t be all over the road"
@@ -221,16 +220,18 @@ and they should ride on effort, not speed.
 The effort level should be as constant as possible.
 This means that the speed will be faster on the flat with appropriate gear changes,
 and slower on the hills and rises again with appropriate use of your gears.
-We’re not trying to maintain a constant speed - because the terrain will change and also the wind conditions.
+We’re not trying to maintain a constant speed, because the terrain will change and also the wind conditions.
 
 The two front riders set and maintain the pace, but the rest of the group are
 responsible for indicating if this pace exceeds the comfort threshold of any member.
 If you notice that the rider next to you is struggling to keep up,
 or a rider at the back has fallen behind the ride, a shout of “mile off” or
 “half a mile off” will let the front riders know that they need to drop the pace slightly.
+
 The skill of setting the pace is to ensure the group isn’t splitting every time
 there’s a rise in the road, but we may need to regroup at the top of any significant hill -
-especially if some riders are going for hilltop points."""
+especially if some riders are going for hilltop points.
+This should not be happening on every little rise."""
     , Entry
         "Light on the brakes"
         """For a safe enjoyable ride it’s important to ride smoothly, and try and avoid hard
@@ -281,7 +282,8 @@ Moderate the speed. Just knock it back and be safe.
 Try to avoid going over white painted road markings while turning as they can be  slippery ...
 especially white domed roundabouts!!!
 The same applies to metalwork on the road ... OK in straight line but if possible try not to
-be turning and leaning the bike on paintwork or metal covers."""
+be turning and leaning the bike on paintwork or metal covers.
+Make sure your mudflap is long enough to protect the rider behind you."""
     , Entry
         "Horses"
         """When overtaking horses either solo or in a group the lead riders should shout a clear
@@ -307,7 +309,7 @@ Bumpy or uneven surface? Try this ... cranks horizontal, weight
 increased on the pedals so you’re almost standing on them.
 Experiment with these techniques."""
     , Entry
-        "Awareness and Anticipation"
+        "Awareness"
         """Always pay attention to what’s happening on the road ahead of the group,
 and also the general group dynamics. Knock it back a bit through busy urban areas."""
     , Entry
