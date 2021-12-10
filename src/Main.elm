@@ -7,6 +7,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import FeatherIcons
 import FlatColors.BritishPalette
 import FlatColors.ChinesePalette exposing (white)
 import FlatColors.FlatUIPalette exposing (..)
@@ -155,6 +156,8 @@ content =
         """Where space allows we ride in two tidy lines. 
 The front positions will change regularly so everyone gets a chance to ride on the front
 and share the pace-making.
+
+[This video](https://www.youtube.com/watch?v=-9upR9r2_uQ) has a great explanation of how we rotate positions.
         """
     , Entry
         "Don’t be all over the road"
@@ -393,25 +396,37 @@ tricolore width =
 entryDetail : Entry -> Element Msg
 entryDetail entry =
     -- Try to get tricolore border.
+    let
+        closeButton =
+            Input.button
+                [ Font.color FlatColors.BritishPalette.chainGangGrey
+                , alignRight
+                ]
+                { onPress = Just <| SelectEntry Nothing
+                , label =
+                    html <|
+                        FeatherIcons.toHtml [] <|
+                            FeatherIcons.withSize 36 <|
+                                FeatherIcons.x
+                }
+    in
     tricolore 5 <|
-        Input.button
-            [ width (fill |> maximum 500)
-            ]
-            { onPress = Just <| SelectEntry Nothing
-            , label =
-                column [ spacing 10 ]
-                    [ paragraph
-                        [ Font.size 24
-                        , Font.color FlatColors.BritishPalette.electromagnetic
-                        , Font.bold
-                        , padding 10
-                        ]
-                        [ text entry.title ]
-                    , paragraph
-                        [ Font.size 20
-                        , padding 10
-                        , Font.color FlatColors.BritishPalette.blueNights
-                        ]
-                        [ html <| Markdown.toHtml [] entry.content ]
+        column
+            [ spacing 10, width (fill |> maximum 500), padding 10 ]
+            [ row [ width fill ]
+                [ paragraph
+                    [ Font.size 24
+                    , Font.color FlatColors.BritishPalette.electromagnetic
+                    , Font.bold
+                    , padding 10
                     ]
-            }
+                    [ text entry.title ]
+                , closeButton
+                ]
+            , paragraph
+                [ Font.size 20
+                , padding 10
+                , Font.color FlatColors.BritishPalette.blueNights
+                ]
+                [ html <| Markdown.toHtml [] entry.content ]
+            ]
