@@ -250,7 +250,7 @@ entryDetail entry =
                 }
 
         map =
-            image [ alignTop, alignRight, width <| px 500, height <| px 400 ]
+            image [ alignTop, alignRight, width <| px 500 ]
                 { src = entry.mapImage
                 , description = entry.title
                 }
@@ -260,14 +260,36 @@ entryDetail entry =
                 { src = entry.profileImage
                 , description = "profile"
                 }
+
+        gpxButton =
+            Input.button
+                [ spacing 10
+                , Border.rounded 20
+                , height <| px 50
+                , width <| px 50
+                , padding 10
+                , alignBottom
+                , alignRight
+                , Background.color FlatColors.FlatUIPalette.emerald
+                , Font.color FlatColors.FlatUIPalette.clouds
+                ]
+                { onPress = Just <| SelectEntry (Just entry)
+                , label =
+                    html <|
+                        FeatherIcons.toHtml [] <|
+                            FeatherIcons.withSize 36 <|
+                                FeatherIcons.download
+                }
     in
     column
         [ width <| px 750
-        , height <| px 600
+
+        --, height <| px 600
         , Border.color FlatColors.FlatUIPalette.clouds
         , Border.width 10
         , Border.rounded 20
         , inFront closeButton
         , Background.color FlatColors.BritishPalette.lynxWhite
+        , spacing 0
         ]
-        [ map, profile ]
+        [ map, profile, gpxButton ]
