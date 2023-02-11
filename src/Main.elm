@@ -198,14 +198,15 @@ entryAsSmallCard entry =
                 ]
 
         title =
-            paragraph
+            el
                 [ alignBottom
+                , centerX
                 , Font.center
                 , Font.glow FlatColors.FlatUIPalette.clouds 10
                 , Font.color FlatColors.FlatUIPalette.wisteria
                 ]
-                [ text entry.title
-                ]
+            <|
+                text entry.title
 
         map =
             image [ alignTop, centerX, width <| px 250, height <| px 200 ]
@@ -219,12 +220,16 @@ entryAsSmallCard entry =
     in
     Input.button
         [ spacing 10
-
-        --, width (fill |> minimum 300 |> maximum 400)
-        , padding 10
+        , Border.rounded 5
         ]
         { onPress = Just <| SelectEntry (Just entry)
-        , label = el [ inFront overlay ] map
+        , label =
+            el
+                [ clip
+                , Border.rounded 10
+                , inFront overlay
+                ]
+                map
         }
 
 
