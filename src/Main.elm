@@ -210,8 +210,8 @@ entryAsSmallCard entry =
 
         map =
             image [ alignTop, centerX, width <| px 250, height <| px 200 ]
-                { src = "images/aldbury-map.png"
-                , description = "Aldbury - The Musette"
+                { src = entry.mapImage
+                , description = entry.title
                 }
 
         overlay =
@@ -248,7 +248,26 @@ entryDetail entry =
                             FeatherIcons.withSize 36 <|
                                 FeatherIcons.x
                 }
+
+        map =
+            image [ alignTop, alignRight, width <| px 500, height <| px 400 ]
+                { src = entry.mapImage
+                , description = entry.title
+                }
+
+        profile =
+            image [ alignTop, alignRight, width <| px 500, height <| px 100 ]
+                { src = entry.profileImage
+                , description = "profile"
+                }
     in
     column
-        [ spacing 10, width (fill |> maximum 500), padding 10 ]
-        []
+        [ width <| px 750
+        , height <| px 600
+        , Border.color FlatColors.FlatUIPalette.clouds
+        , Border.width 10
+        , Border.rounded 20
+        , inFront closeButton
+        , Background.color FlatColors.BritishPalette.lynxWhite
+        ]
+        [ map, profile ]
