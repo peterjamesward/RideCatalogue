@@ -111,21 +111,41 @@ view model =
                                         FeatherIcons.x
                         }
 
-                map =
+                mapNarrow =
                     image
                         [ alignTop
                         , alignRight
-                        , width <| maximum 800 <| px <| model.width - 40
+                        , width <| px <| model.width - 40
                         ]
                         { src = entry.mapImage
                         , description = entry.title
                         }
 
-                profile =
+                mapWide =
                     image
                         [ alignTop
                         , alignRight
-                        , width <| maximum 800 <| px <| model.width - 40
+                        , width <| px <| model.width // 4
+                        ]
+                        { src = entry.mapImage
+                        , description = entry.title
+                        }
+
+                profileNarrow =
+                    image
+                        [ alignTop
+                        , alignRight
+                        , width <| px <| model.width - 40
+                        ]
+                        { src = entry.profileImage
+                        , description = "profile"
+                        }
+
+                profileWide =
+                    image
+                        [ alignTop
+                        , alignRight
+                        , width <| px <| model.width // 4
                         ]
                         { src = entry.profileImage
                         , description = "profile"
@@ -158,19 +178,40 @@ view model =
                     <|
                         [ html <| Markdown.toHtml [] entry.narrative ]
             in
-            wrappedRow
-                [ Border.color FlatColors.FlatUIPalette.clouds
-                , Border.width 10
-                , Border.rounded 20
-                , inFront closeButton
-                , Background.color FlatColors.BritishPalette.lynxWhite
-                , spacing 0
-                ]
-                [ narrative
-                , map
-                , profile
-                , gpxButton
-                ]
+            if model.device.class == E.Tablet || model.device.class == E.Phone then
+                -- Simple linear flow
+                column
+                    [ Border.color FlatColors.FlatUIPalette.clouds
+                    , Border.width 10
+                    , Border.rounded 20
+                    , inFront closeButton
+                    , Background.color FlatColors.BritishPalette.lynxWhite
+                    , spacing 0
+                    ]
+                    [ narrative
+                    , mapNarrow
+                    , profileNarrow
+                    , gpxButton
+                    ]
+
+            else
+                -- Try to lay it out nicely with some flow for the text.
+                row
+                    [ Border.color FlatColors.FlatUIPalette.clouds
+                    , Border.width 10
+                    , Border.rounded 20
+                    , inFront closeButton
+                    , Background.color FlatColors.BritishPalette.lynxWhite
+                    , spacing 0
+                    , width <| px <| model.width // 2
+                    ]
+                    [ el [ width <| fillPortion 1 ] narrative
+                    , column [ width <| fillPortion 1 ]
+                        [ el [ alignRight, alignTop ] mapWide
+                        , el [ alignRight, alignTop ] profileWide
+                        , gpxButton
+                        ]
+                    ]
     in
     layout
         [ E.width <| px model.width
