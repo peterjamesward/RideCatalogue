@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Browser exposing (application)
+import Browser.Events
 import Browser.Navigation as Nav
 import Element as E exposing (..)
 import Element.Background as Background
@@ -23,6 +24,7 @@ import Url.Parser exposing (Parser, map, oneOf, parse, s, top)
 type alias Model =
     { active : Maybe Entry
     , entries : List Entry
+    , screenWidth : Int
     }
 
 
@@ -33,12 +35,14 @@ type alias Flags =
 type Msg
     = SelectEntry (Maybe Entry)
     | Randomized (List Entry)
+    | GotNewWidth Int
 
 
-init : () -> ( Model, Cmd Msg )
-init _ =
+init : Int -> ( Model, Cmd Msg )
+init width =
     ( { active = Nothing
       , entries = content
+      , screenWidth = width
       }
     , Random.generate Randomized <| shuffle content
     )
@@ -66,11 +70,94 @@ update msg model =
             , Cmd.none
             )
 
+        GotNewWidth width ->
+            ( { model | screenWidth = width }
+            , Cmd.none
+            )
+
 
 view : Model -> Html Msg
 view model =
+    let
+        entryDetail : Entry -> Element Msg
+        entryDetail entry =
+            let
+                closeButton =
+                    Input.button
+                        [ Font.color FlatColors.BritishPalette.chainGangGrey
+                        , alignRight
+                        ]
+                        { onPress = Just <| SelectEntry Nothing
+                        , label =
+                            html <|
+                                FeatherIcons.toHtml [] <|
+                                    FeatherIcons.withSize 36 <|
+                                        FeatherIcons.x
+                        }
+
+                map =
+                    image
+                        [ alignTop
+                        , alignRight
+                        , width <| maximum 800 <| px <| model.screenWidth - 40
+                        ]
+                        { src = entry.mapImage
+                        , description = entry.title
+                        }
+
+                profile =
+                    image
+                        [ alignTop
+                        , alignRight
+                        , width <| maximum 800 <| px <| model.screenWidth - 40
+                        ]
+                        { src = entry.profileImage
+                        , description = "profile"
+                        }
+
+                gpxButton =
+                    downloadAs
+                        [ Border.rounded 20
+                        , Border.color FlatColors.FlatUIPalette.wisteria
+                        , Border.width 2
+                        , padding 5
+                        , alignBottom
+                        , centerX
+                        , Background.color FlatColors.FlatUIPalette.emerald
+                        , Font.color FlatColors.FlatUIPalette.wisteria
+                        , Font.size 16
+                        ]
+                        { url = entry.gpx
+                        , label = text "Download GPX file"
+                        , filename = entry.gpx
+                        }
+
+                narrative =
+                    paragraph
+                        [ alignTop
+                        , alignLeft
+                        , paddingEach { left = 20, right = 20, top = 20, bottom = 0 }
+                        , Font.size 16
+                        ]
+                    <|
+                        [ html <| Markdown.toHtml [] entry.narrative ]
+            in
+            wrappedRow
+                [ Border.color FlatColors.FlatUIPalette.clouds
+                , Border.width 10
+                , Border.rounded 20
+                , inFront closeButton
+                , Background.color FlatColors.BritishPalette.lynxWhite
+                , spacing 0
+                ]
+                [ narrative
+                , map
+                , profile
+                , gpxButton
+                ]
+    in
     layout
-        [ E.width fill
+        [ E.width <| px model.screenWidth
         , inFront <|
             case model.active of
                 Just entry ->
@@ -188,7 +275,7 @@ homeScreen model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Sub.none
+    Browser.Events.onResize (\w h -> GotNewWidth w)
 
 
 entryAsSmallCard : Entry -> Element Msg
@@ -271,74 +358,3 @@ entryAsSmallCard entry =
                 ]
                 map
         }
-
-
-entryDetail : Entry -> Element Msg
-entryDetail entry =
-    let
-        closeButton =
-            Input.button
-                [ Font.color FlatColors.BritishPalette.chainGangGrey
-                , alignRight
-                ]
-                { onPress = Just <| SelectEntry Nothing
-                , label =
-                    html <|
-                        FeatherIcons.toHtml [] <|
-                            FeatherIcons.withSize 36 <|
-                                FeatherIcons.x
-                }
-
-        map =
-            image [ alignTop, alignRight, width <| maximum 300 fill ]
-                { src = entry.mapImage
-                , description = entry.title
-                }
-
-        profile =
-            image [ alignTop, alignRight, width <| maximum 300 fill ]
-                { src = entry.profileImage
-                , description = "profile"
-                }
-
-        gpxButton =
-            downloadAs
-                [ Border.rounded 20
-                , Border.color FlatColors.FlatUIPalette.wisteria
-                , Border.width 2
-                , padding 5
-                , alignBottom
-                , centerX
-                , Background.color FlatColors.FlatUIPalette.emerald
-                , Font.color FlatColors.FlatUIPalette.wisteria
-                , Font.size 16
-                ]
-                { url = entry.gpx
-                , label = text "Download GPX file"
-                , filename = entry.gpx
-                }
-
-        narrative =
-            paragraph
-                [ alignTop
-                , alignLeft
-                , paddingEach { left = 20, right = 20, top = 20, bottom = 0 }
-                , Font.size 16
-                ]
-            <|
-                [ html <| Markdown.toHtml [] entry.narrative ]
-    in
-    wrappedRow
-        [ width <| maximum 600 fill
-        , Border.color FlatColors.FlatUIPalette.clouds
-        , Border.width 10
-        , Border.rounded 20
-        , inFront closeButton
-        , Background.color FlatColors.BritishPalette.lynxWhite
-        , spacing 0
-        ]
-        [ narrative
-        , map
-        , profile
-        , gpxButton
-        ]
