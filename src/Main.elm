@@ -24,7 +24,9 @@ import Url.Parser exposing (Parser, map, oneOf, parse, s, top)
 type alias Model =
     { active : Maybe Entry
     , entries : List Entry
-    , screenWidth : Int
+    , width : Int
+    , height : Int
+    , device : E.Device
     }
 
 
@@ -35,14 +37,24 @@ type alias Flags =
 type Msg
     = SelectEntry (Maybe Entry)
     | Randomized (List Entry)
-    | GotNewWidth Int
+    | GotNewSize Int Int
 
 
-init : Int -> ( Model, Cmd Msg )
-init width =
+defaultDevice =
+    E.Device Desktop Landscape
+
+
+
+--TODO: USE classifyDevice : { window | height : Int, width : Int } -> Device
+
+
+init : ( Int, Int ) -> ( Model, Cmd Msg )
+init ( width, height ) =
     ( { active = Nothing
       , entries = content
-      , screenWidth = width
+      , width = width
+      , height = height
+      , device = E.classifyDevice { height = height, width = width }
       }
     , Random.generate Randomized <| shuffle content
     )
@@ -70,8 +82,12 @@ update msg model =
             , Cmd.none
             )
 
-        GotNewWidth width ->
-            ( { model | screenWidth = width }
+        GotNewSize width height ->
+            ( { model
+                | width = width
+                , height = height
+                , device = E.classifyDevice { height = height, width = width }
+              }
             , Cmd.none
             )
 
@@ -99,7 +115,7 @@ view model =
                     image
                         [ alignTop
                         , alignRight
-                        , width <| maximum 800 <| px <| model.screenWidth - 40
+                        , width <| maximum 800 <| px <| model.width - 40
                         ]
                         { src = entry.mapImage
                         , description = entry.title
@@ -109,7 +125,7 @@ view model =
                     image
                         [ alignTop
                         , alignRight
-                        , width <| maximum 800 <| px <| model.screenWidth - 40
+                        , width <| maximum 800 <| px <| model.width - 40
                         ]
                         { src = entry.profileImage
                         , description = "profile"
@@ -157,7 +173,7 @@ view model =
                 ]
     in
     layout
-        [ E.width <| px model.screenWidth
+        [ E.width <| px model.width
         , inFront <|
             case model.active of
                 Just entry ->
@@ -275,7 +291,7 @@ homeScreen model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Browser.Events.onResize (\w h -> GotNewWidth w)
+    Browser.Events.onResize (\w h -> GotNewSize w h)
 
 
 entryAsSmallCard : Entry -> Element Msg
