@@ -290,13 +290,13 @@ entryDetail entry =
                 }
 
         map =
-            image [ alignTop, alignRight, width <| px 500 ]
+            image [ alignTop, alignRight, width <| maximum 300 fill ]
                 { src = entry.mapImage
                 , description = entry.title
                 }
 
         profile =
-            image [ alignTop, alignRight, width <| px 500, height <| px 100 ]
+            image [ alignTop, alignRight, width <| maximum 300 fill ]
                 { src = entry.profileImage
                 , description = "profile"
                 }
@@ -326,13 +326,10 @@ entryDetail entry =
                 , Font.size 16
                 ]
             <|
-                [ map
-                , profile
-                , html <| Markdown.toHtml [] entry.narrative
-                ]
+                [ html <| Markdown.toHtml [] entry.narrative ]
     in
-    column
-        [ width <| px 750
+    wrappedRow
+        [ width <| maximum 600 fill
         , Border.color FlatColors.FlatUIPalette.clouds
         , Border.width 10
         , Border.rounded 20
@@ -340,4 +337,8 @@ entryDetail entry =
         , Background.color FlatColors.BritishPalette.lynxWhite
         , spacing 0
         ]
-        [ narrative, gpxButton ]
+        [ narrative
+        , map
+        , profile
+        , gpxButton
+        ]
