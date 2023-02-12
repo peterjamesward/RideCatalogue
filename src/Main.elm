@@ -17,6 +17,7 @@ import Length
 import Markdown
 import Random
 import Random.List exposing (shuffle)
+import String.Interpolate
 import Url exposing (Url)
 import Url.Parser exposing (Parser, map, oneOf, parse, s, top)
 
@@ -176,7 +177,7 @@ view model =
                         , Font.size 16
                         ]
                     <|
-                        [ html <| Markdown.toHtml [] entry.narrative ]
+                        [ html <| Markdown.toHtml [] (withPreamble entry) ]
             in
             if model.device.class == E.Tablet || model.device.class == E.Phone then
                 -- Simple linear flow
@@ -263,6 +264,17 @@ type alias Entry =
     }
 
 
+metrics =
+    """
+
+```
+Distance {0}km, {1} miles.
+Climbing {2}m, {3} feet.
+```
+
+"""
+
+
 aldbury : Entry
 aldbury =
     { title = "Aldbury"
@@ -272,8 +284,7 @@ aldbury =
     , distance = Length.miles 54
     , climbing = Length.meters 600
     , gpx = "gpx/aldbury.gpx"
-    , narrative = """# Aldbury
-
+    , narrative = """
 One of the most popular Chiltern runs, not least because of the splendid location of The Musette,
 and its menu. There are many ways there and many ways back, but this route is neither too direct
 nor too convoluted, but uses some rather lovely and varied roads with enough up-and-down to keep
@@ -290,6 +301,20 @@ Chenies climb, then a main road blast back to Rickmansworth and then home again.
     }
 
 
+withPreamble : Entry -> String
+withPreamble entry =
+    "# "
+        ++ entry.title
+        ++ " \n "
+        ++ String.Interpolate.interpolate metrics
+            [ String.fromInt <| truncate <| Length.inKilometers entry.distance
+            , String.fromInt <| truncate <| Length.inMiles entry.distance
+            , String.fromInt <| truncate <| Length.inMeters entry.climbing
+            , String.fromInt <| truncate <| Length.inFeet entry.climbing
+            ]
+        ++ entry.narrative
+
+
 windsor : Entry
 windsor =
     { title = "Windsor"
@@ -299,8 +324,7 @@ windsor =
     , distance = Length.kilometers 97.8
     , climbing = Length.meters 509
     , gpx = "gpx/windsor.gpx"
-    , narrative = """# Windsor
-
+    , narrative = """
 Yield to your inner tourist. Visit Windsor, see the King. Eat a cinnamon bun at the eponymous cafe.
 
 Heading westwards through Harefield and Maple Cross, we enjoy the lanes around the Chalfonts
