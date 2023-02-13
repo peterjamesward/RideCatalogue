@@ -213,6 +213,8 @@ view model =
                         , alignLeft
                         , paddingEach { left = 20, right = 20, top = 20, bottom = 0 }
                         , Font.size 16
+
+                        --, spacing 6
                         ]
                     <|
                         [ html <| Markdown.toHtml [] (withPreamble entry) ]
@@ -278,10 +280,18 @@ view model =
                     none
         ]
     <|
-        column [ width fill, spacing 20, padding 20 ]
-            [ sortOptions
-            , homeScreen model
+        E.image
+            [ width fill
+            , height fill
+            , inFront <|
+                column [ width fill, spacing 20, padding 20 ]
+                    [ sortOptions
+                    , homeScreen model
+                    ]
             ]
+            { src = "images/context-map.png"
+            , description = "locale"
+            }
 
 
 type ButtonPosition
@@ -505,24 +515,20 @@ entryAsSmallCard entry =
             (String.fromInt <| truncate <| units distance) ++ " " ++ label
 
         mileage =
-            el [ alignRight ] <|
-                text <|
-                    asDistance Length.inMiles "mi" entry.distance
+            text <|
+                asDistance Length.inMiles "mi" entry.distance
 
         km =
-            el [ alignRight ] <|
-                text <|
-                    asDistance Length.inKilometers "km" entry.distance
+            text <|
+                asDistance Length.inKilometers "km" entry.distance
 
         climbMetric =
-            el [ alignRight ] <|
-                text <|
-                    asDistance Length.inMeters "m" entry.climbing
+            text <|
+                asDistance Length.inMeters "m" entry.climbing
 
         climbImperial =
-            el [ alignRight ] <|
-                text <|
-                    asDistance Length.inFeet "ft" entry.climbing
+            text <|
+                asDistance Length.inFeet "ft" entry.climbing
 
         leftInfo =
             column
@@ -544,7 +550,8 @@ entryAsSmallCard entry =
                 , alignTop
                 , Border.color FlatColors.FlatUIPalette.concrete
                 , Font.color FlatColors.FlatUIPalette.wisteria
-                , padding 5
+
+                --, padding 5
                 , spacing 10
                 , Font.size 16
                 ]
@@ -556,7 +563,9 @@ entryAsSmallCard entry =
             el
                 [ alignBottom
                 , centerX
+                , centerY
                 , Font.center
+                , Font.bold
                 , Font.glow FlatColors.FlatUIPalette.clouds 10
                 , Font.color FlatColors.FlatUIPalette.wisteria
                 ]
@@ -570,21 +579,19 @@ entryAsSmallCard entry =
                 }
 
         overlay =
-            row [ width fill, height fill ]
-                [ leftInfo, title, rightInfo ]
+            row [ width fill ]
+                [ leftInfo, rightInfo ]
     in
     Input.button
-        [ spacing 10
-        , Border.rounded 5
-
-        --, width <| px 120
+        [ Border.rounded 5
+        , inFront overlay
+        , inFront title
         ]
         { onPress = Just <| SelectEntry (Just entry)
         , label =
             el
                 [ clip
                 , Border.rounded 10
-                , inFront overlay
                 ]
                 map
         }
