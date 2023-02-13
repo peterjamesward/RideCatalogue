@@ -421,20 +421,6 @@ to Hatch End.
     }
 
 
-withPreamble : Entry -> String
-withPreamble entry =
-    "# "
-        ++ entry.title
-        ++ " \n "
-        ++ String.Interpolate.interpolate metrics
-            [ String.fromInt <| truncate <| Length.inKilometers entry.distance
-            , String.fromInt <| truncate <| Length.inMiles entry.distance
-            , String.fromInt <| truncate <| Length.inMeters entry.climbing
-            , String.fromInt <| truncate <| Length.inFeet entry.climbing
-            ]
-        ++ entry.narrative
-
-
 windsor : Entry
 windsor =
     { title = "Windsor"
@@ -458,9 +444,41 @@ espresso."""
     }
 
 
+nonstopPizzaRide : Entry
+nonstopPizzaRide =
+    { title = "Non-stop Pizza ride"
+    , mapImage = "images/pizza-map.png"
+    , profileImage = "images/pizza-profile.png"
+    , lunchStop = "Minori Pizzeria"
+    , distance = Length.kilometers 68.5
+    , climbing = Length.meters 410
+    , gpx = "gpx/pizza.gpx"
+    , narrative = """
+You want to get home to watch the soccer, mow the lawn, cook the dinner? This is the perfect ride
+for you. It's also the perfect ride if you want to relax post-ride and have a chat over pizza and
+(optionally) a beer at the reknowned Minori Pizzeria. Pack an extra energy bar or two, as there's
+no stopping until we stop.
+"""
+    }
+
+
 content : List Entry
 content =
-    [ aldbury, windsor, beaconsfield ]
+    [ aldbury, windsor, beaconsfield, nonstopPizzaRide ]
+
+
+withPreamble : Entry -> String
+withPreamble entry =
+    "# "
+        ++ entry.title
+        ++ " \n "
+        ++ String.Interpolate.interpolate metrics
+            [ String.fromInt <| truncate <| Length.inKilometers entry.distance
+            , String.fromInt <| truncate <| Length.inMiles entry.distance
+            , String.fromInt <| truncate <| Length.inMeters entry.climbing
+            , String.fromInt <| truncate <| Length.inFeet entry.climbing
+            ]
+        ++ entry.narrative
 
 
 homeScreen model =
