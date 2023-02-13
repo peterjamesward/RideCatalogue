@@ -28,7 +28,15 @@ type alias Model =
     , width : Int
     , height : Int
     , device : E.Device
+    , sortBy : Sortation
     }
+
+
+type Sortation
+    = Randomised
+    | ByDistance
+    | ByClimbing
+    | ByName
 
 
 type alias Flags =
@@ -39,6 +47,7 @@ type Msg
     = SelectEntry (Maybe Entry)
     | Randomized (List Entry)
     | GotNewSize Int Int
+    | SetSortation Sortation
 
 
 defaultDevice =
@@ -56,6 +65,7 @@ init ( width, height ) =
       , width = width
       , height = height
       , device = E.classifyDevice { height = height, width = width }
+      , sortBy = Randomised
       }
     , Random.generate Randomized <| shuffle content
     )
@@ -90,6 +100,34 @@ update msg model =
                 , device = E.classifyDevice { height = height, width = width }
               }
             , Cmd.none
+            )
+
+        SetSortation sortation ->
+            let
+                newModel =
+                    { model
+                        | sortBy = sortation
+                        , entries =
+                            case sortation of
+                                Randomised ->
+                                    model.entries
+
+                                ByName ->
+                                    List.sortBy .title model.entries
+
+                                ByDistance ->
+                                    List.sortBy (.distance >> Length.inKilometers) model.entries
+
+                                ByClimbing ->
+                                    List.sortBy (.climbing >> Length.inMeters) model.entries
+                    }
+            in
+            ( newModel
+            , if sortation == Randomised then
+                Random.generate Randomized <| shuffle content
+
+              else
+                Cmd.none
             )
 
 
@@ -213,6 +251,20 @@ view model =
                         , gpxButton
                         ]
                     ]
+
+        sortOptions =
+            Input.radioRow
+                [ Border.rounded 6, centerX ]
+                { onChange = SetSortation
+                , selected = Just model.sortBy
+                , label = Input.labelHidden "sort"
+                , options =
+                    [ Input.optionWith ByName <| button First "A-Z"
+                    , Input.optionWith ByDistance <| button Mid "Distance"
+                    , Input.optionWith ByClimbing <| button Mid "Climbing"
+                    , Input.optionWith Randomised <| button Last "Randomize"
+                    ]
+                }
     in
     layout
         [ E.width <| px model.width
@@ -227,7 +279,56 @@ view model =
         ]
     <|
         column [ width fill, spacing 20, padding 20 ]
-            [ homeScreen model ]
+            [ sortOptions
+            , homeScreen model
+            ]
+
+
+type ButtonPosition
+    = First
+    | Mid
+    | Last
+
+
+button position label state =
+    let
+        borders =
+            case position of
+                First ->
+                    { left = 2, right = 2, top = 2, bottom = 2 }
+
+                Mid ->
+                    { left = 0, right = 2, top = 2, bottom = 2 }
+
+                Last ->
+                    { left = 0, right = 2, top = 2, bottom = 2 }
+
+        corners =
+            case position of
+                First ->
+                    { topLeft = 6, bottomLeft = 6, topRight = 0, bottomRight = 0 }
+
+                Mid ->
+                    { topLeft = 0, bottomLeft = 0, topRight = 0, bottomRight = 0 }
+
+                Last ->
+                    { topLeft = 0, bottomLeft = 0, topRight = 6, bottomRight = 6 }
+    in
+    el
+        [ paddingEach { left = 20, right = 20, top = 10, bottom = 10 }
+        , Border.roundEach corners
+        , Border.widthEach borders
+        , Border.color FlatColors.FlatUIPalette.wisteria
+        , Background.color <|
+            if state == Input.Selected then
+                FlatColors.FlatUIPalette.belizeHole
+
+            else
+                FlatColors.FlatUIPalette.clouds
+        ]
+    <|
+        el [ centerX, centerY ] <|
+            text label
 
 
 type Route
@@ -301,6 +402,25 @@ Chenies climb, then a main road blast back to Rickmansworth and then home again.
     }
 
 
+beaconsfield : Entry
+beaconsfield =
+    { title = "Beaconsfield"
+    , mapImage = "images/BEACONSFIELD-map.png"
+    , profileImage = "images/BEACONSFIELD-profile.png"
+    , lunchStop = "Costa Coffee"
+    , distance = Length.kilometers 70
+    , climbing = Length.meters 744
+    , gpx = "gpx/BEACONSFIELD.gpx"
+    , narrative = """
+This is a great step-up-from-Saturday ride, at 44 miles! We pootle out through Ricky and the 
+Chalfonts, up Winchmore Hill to Penn Street and then we're practically at our lunch stop before 
+25 miles is up. The afternoon takes us over the M40 which we then stay fairly close to on 
+surprisingly quiet lanes before cruising  through Denham, up the Col de Harefield and back 
+to Hatch End.
+"""
+    }
+
+
 withPreamble : Entry -> String
 withPreamble entry =
     "# "
@@ -340,7 +460,7 @@ espresso."""
 
 content : List Entry
 content =
-    [ aldbury, windsor ]
+    [ aldbury, windsor, beaconsfield ]
 
 
 homeScreen model =
