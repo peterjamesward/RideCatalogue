@@ -456,7 +456,7 @@ nonstopPizzaRide =
     , narrative = """
 You want to get home to watch the soccer, mow the lawn, cook the dinner? This is the perfect ride
 for you. It's also the perfect ride if you want to relax post-ride and have a chat over pizza and
-(optionally) a beer at the reknowned Minori Pizzeria. Pack an extra energy bar or two, as there's
+(optionally) a beer at the renowned Minori Pizzeria. Pack an extra energy bar or two, as there's
 no stopping until we stop.
 """
     }
@@ -483,10 +483,11 @@ withPreamble entry =
 
 homeScreen model =
     wrappedRow
-        [ padding 20
+        [ padding 10
         , spacing 20
         , alignLeft
         , alignTop
+        , width fill
         ]
     <|
         List.map entryAsSmallCard model.entries
@@ -504,16 +505,24 @@ entryAsSmallCard entry =
             (String.fromInt <| truncate <| units distance) ++ " " ++ label
 
         mileage =
-            text <| asDistance Length.inMiles "mi" entry.distance
+            el [ alignRight ] <|
+                text <|
+                    asDistance Length.inMiles "mi" entry.distance
 
         km =
-            text <| asDistance Length.inKilometers "km" entry.distance
+            el [ alignRight ] <|
+                text <|
+                    asDistance Length.inKilometers "km" entry.distance
 
         climbMetric =
-            text <| asDistance Length.inMeters "m" entry.climbing
+            el [ alignRight ] <|
+                text <|
+                    asDistance Length.inMeters "m" entry.climbing
 
         climbImperial =
-            text <| asDistance Length.inFeet "ft" entry.climbing
+            el [ alignRight ] <|
+                text <|
+                    asDistance Length.inFeet "ft" entry.climbing
 
         leftInfo =
             column
@@ -567,6 +576,8 @@ entryAsSmallCard entry =
     Input.button
         [ spacing 10
         , Border.rounded 5
+
+        --, width <| px 120
         ]
         { onPress = Just <| SelectEntry (Just entry)
         , label =
