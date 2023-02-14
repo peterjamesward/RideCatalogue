@@ -489,6 +489,26 @@ vigour and spirits.
     }
 
 
+wilstone : Entry
+wilstone =
+    { title = "Wilstone"
+    , mapImage = "images/wilstone-map.png"
+    , profileImage = "images/wilstone-profile.png"
+    , lunchStop = "Cinnamon Cafe"
+    , distance = Length.kilometers 93.3
+    , climbing = Length.meters 900
+    , gpx = "gpx/wilstone.gpx"
+    , narrative = """
+OK, it's not very different to the Aldbury route, but it's different enough, ok?
+Out through Oxhey and Moor Park, picking up riders along the way, Chenies, Chesham,
+Wigginton, down to Tring and thence Wilstone and the excellent P E Mead Farm Shop Cafe thing.
+The route back is slightly to the east, taking in Berkhampstead, Bovingdon and Bucks Hill.
+Elsewhere, you'll find the optional "Chain Gang Loop" which makes good use of the flat
+landscape to put in a useful bit of practice riding in formation. Feels good.
+"""
+    }
+
+
 nonstopPizzaRide : Entry
 nonstopPizzaRide =
     { title = "Non-stop Pizza ride"
@@ -509,7 +529,7 @@ no stopping until we stop.
 
 content : List Entry
 content =
-    [ aldbury, windsor, beaconsfield, nonstopPizzaRide, benson ]
+    [ aldbury, windsor, beaconsfield, nonstopPizzaRide, benson, wilstone ]
 
 
 withPreamble : Entry -> String
