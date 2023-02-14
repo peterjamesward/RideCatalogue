@@ -422,18 +422,23 @@ benson =
     , climbing = Length.meters 1592
     , gpx = "gpx/Benson.gpx"
     , narrative = """
-One of our signature rides, the Benson weighs in at just under the imperial ton so unless you
-live in Hatch End, this will be a proper ride. Don't plan on getting home early. It's main road
-work out to Denham before we dip down to Fulmer and plough west through Bourne End and Marlow,
-up the long drag to Frieth and Christmas Common. Glorious scenery abounds, and we keep a
-measured pace, finally passing by RAF Benson and dropping down to the river for a decent
-lunch.
+Oft-trodden path, Benson's ride, a quintessential treat,
+Weighty it is, nearly an imperial ton, far from petite,
+Unless Hatch End be thy home, a proper ride it shall be,
+Homecoming plans, leave them be, for it's a long journey to see.
 
-After a short warm-up, you'll notice the climb up to Stoke Row, past the Maharajah's Well.
-You'll also notice the large open spaces on this plateau before we return to the river at
-Henley, pass through Marlow again but take in Winter Hill to get across to Cookham. Then it's
-a whizz through Burnham Beeches with an optional coffee or ice cream before we (nearly)
-retrace our steps and return, tired but satisfied, to Hatch End.
+Majestic landscapes greet, as we traverse the main road,
+From Denham to Fulmer, westward through Bourne End, we rode,
+Marlow's charm and the long ascent to Frieth, we will climb,
+Christmas Common we'll cross, in measured pace, passing by RAF Benson in time.
+
+On Stoke Row, a climb awaits, by the Maharajah's Well,
+A vast plateau to behold, before we to the river dwell,
+Henley we'll pass, through Marlow once again, Winter Hill, we'll embrace,
+To Cookham we'll arrive, buzzing through Burnham Beeches, optional coffee or ice cream to taste.
+
+We'll (nearly) retrace our steps, tired yet content,
+To Hatch End, we'll return, our energy all but spent.
 """
     }
 
@@ -467,16 +472,20 @@ windsor =
     , climbing = Length.meters 509
     , gpx = "gpx/windsor.gpx"
     , narrative = """
-Yield to your inner tourist. Visit Windsor, see the King. Eat a cinnamon bun at the eponymous cafe.
+Take up the call to adventure, my friend, and hie thee to Windsor's regal scene! And whilst there,
+sample a cinnamon bun at the café that bears the same name.
 
-Heading westwards through Harefield and Maple Cross, we enjoy the lanes around the Chalfonts
-and Seer Green before turning south through Beaconsfield and over the M40, crossing the Thames
-in all its beauty at Cookham. A few small, scenic bumps take us down to the M4 and then a lovely
-run along "Museeuw Lane" before we mingle with the muggles in Windsor.
+Our path leads us west, through Harefield and Maple Cross, meandering along the picturesque
+lanes of Chalfonts and Seer Green. Then, to the south we venture, crossing the M40 to witness
+the splendour of the Thames at Cookham. A few gentle inclines and scenic byways carry us down
+to the M4, where we journey with ease down "Museeuw Lane", and end our travels amidst the
+bustling throng of Windsor's folk.
 
-It's a fairly short ride home through Denham, which would be lovely with no cars, and the ascent
-of the Col de Harefield before finding ourselves back at Hatch End with time for a post-ride
-espresso."""
+The way homeward shall be brief, through Denham, where without cars, its quaintness would
+truly come alive. And then we shall ascend the Col de Harefield, before returning, satisfied
+and contented, to Hatch End. And there, a rejuvenating espresso awaits us, restoring our
+vigour and spirits.
+"""
     }
 
 
