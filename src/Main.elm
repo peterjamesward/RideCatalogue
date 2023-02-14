@@ -278,20 +278,25 @@ view model =
 
                 Nothing ->
                     none
+        , Background.tiled "images/context-map.png"
         ]
     <|
-        E.image
-            [ width fill
-            , height fill
-            , inFront <|
-                column [ width fill, spacing 20, padding 20 ]
-                    [ sortOptions
-                    , homeScreen model
-                    ]
+        --    E.image
+        --        [ width fill
+        --        , height fill
+        --        , inFront <|
+        column
+            [ width fill, spacing 20, padding 20 ]
+            [ sortOptions
+            , homeScreen model
             ]
-            { src = "images/context-map.png"
-            , description = "locale"
-            }
+
+
+
+--        ]
+--        { src = "images/context-map.png"
+--        , description = "locale"
+--        }
 
 
 type ButtonPosition
