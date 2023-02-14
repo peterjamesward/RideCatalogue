@@ -412,6 +412,32 @@ Chenies climb, then a main road blast back to Rickmansworth and then home again.
     }
 
 
+benson : Entry
+benson =
+    { title = "Benson"
+    , mapImage = "images/Benson-map.png"
+    , profileImage = "images/Benson-profile.png"
+    , lunchStop = "Waterfront Cafe"
+    , distance = Length.kilometers 153
+    , climbing = Length.meters 1592
+    , gpx = "gpx/Benson.gpx"
+    , narrative = """
+One of our signature rides, the Benson weighs in at just under the imperial ton so unless you
+live in Hatch End, this will be a proper ride. Don't plan on getting home early. It's main road
+work out to Denham before we dip down to Fulmer and plough west through Bourne End and Marlow,
+up the long drag to Frieth and Christmas Common. Glorious scenery abounds, and we keep a
+measured pace, finally passing by RAF Benson and dropping down to the river for a decent
+lunch.
+
+After a short warm-up, you'll notice the climb up to Stoke Row, past the Maharajah's Well.
+You'll also notice the large open spaces on this plateau before we return to the river at
+Henley, pass through Marlow again but take in Winter Hill to get across to Cookham. Then it's
+a whizz through Burnham Beeches with an optional coffee or ice cream before we (nearly)
+retrace our steps and return, tired but satisfied, to Hatch End.
+"""
+    }
+
+
 beaconsfield : Entry
 beaconsfield =
     { title = "Beaconsfield"
@@ -474,7 +500,7 @@ no stopping until we stop.
 
 content : List Entry
 content =
-    [ aldbury, windsor, beaconsfield, nonstopPizzaRide ]
+    [ aldbury, windsor, beaconsfield, nonstopPizzaRide, benson ]
 
 
 withPreamble : Entry -> String
