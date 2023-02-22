@@ -281,22 +281,11 @@ view model =
         , Background.tiled "images/context-map.png"
         ]
     <|
-        --    E.image
-        --        [ width fill
-        --        , height fill
-        --        , inFront <|
         column
             [ width fill, spacing 20, padding 20 ]
             [ sortOptions
             , homeScreen model
             ]
-
-
-
---        ]
---        { src = "images/context-map.png"
---        , description = "locale"
---        }
 
 
 type ButtonPosition
@@ -448,6 +437,29 @@ To Hatch End, we'll return, our energy all but spent.
     }
 
 
+hertford : Entry
+hertford =
+    { title = "Hertford"
+    , mapImage = "images/Hertford-map.png"
+    , profileImage = "images/Hertford-profile.png"
+    , lunchStop = "bebo Cafe"
+    , distance = Length.kilometers 87.6
+    , climbing = Length.meters 600
+    , gpx = "gpx/Hertford_summer.gpx"
+    , narrative = """
+County town of the "County of Opportunities", Hertford has several pleasant hostelries, so it's long
+been a popular destination. It's also a gateway for some longer Herts rides, but that's another story.
+
+This summer route takes in more of the pleasant lanes around Brickendon, with many ups and downs through
+wooded places, but none too severe. The Forza route has more, and more, of the same.
+
+The return route takes in the longish climb of Essendon, but not before you've got your legs working
+again with a nice long run along the river valley. The "old A1" is ideal for some "through and off" work
+later in the day, especially if the wind's against us.
+"""
+    }
+
+
 beaconsfield : Entry
 beaconsfield =
     { title = "Beaconsfield"
@@ -532,9 +544,29 @@ no stopping until we stop.
     }
 
 
+harpenden : Entry
+harpenden =
+    { title = "Harpenden"
+    , mapImage = "images/Harpenden-map.png"
+    , profileImage = "images/Harpenden-profile.png"
+    , lunchStop = "Bebo Cafe"
+    , distance = Length.kilometers 89.7
+    , climbing = Length.meters 618
+    , gpx = "gpx/Harpenden.gpx"
+    , narrative = """
+Hertfordshire is mainly fairly gentle rolling hills, with an occasional kick up. This route is
+basically that. Boring, it is not. As ever, we find the best lanes with peaceful dells and
+sweeping vistas (well, it's not Wyoming).
+
+Have a chill and chat at the Artisan coffe house that is Brew and Cru, knowing that the greater
+part of the day's exertions are behind you, but it ain't over 'til it's over.
+"""
+    }
+
+
 content : List Entry
 content =
-    [ aldbury, windsor, beaconsfield, nonstopPizzaRide, benson, wilstone ]
+    [ aldbury, windsor, beaconsfield, hertford, harpenden, nonstopPizzaRide, benson, wilstone ]
 
 
 withPreamble : Entry -> String
