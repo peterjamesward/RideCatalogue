@@ -472,9 +472,11 @@ beaconsfield =
     , narrative = """
 This is a great step-up-from-Saturday ride, at 44 miles! We pootle out through Ricky and the 
 Chalfonts, up Winchmore Hill to Penn Street and then we're practically at our lunch stop before 
-25 miles is up. The afternoon takes us over the M40 which we then stay fairly close to on 
+25 miles is up.
+
+The afternoon takes us over the M40 which we then stay fairly close to on
 surprisingly quiet lanes before cruising  through Denham, up the Col de Harefield and back 
-to Hatch End.
+to Hatch End. How we managed to fit in so much in such a short ride, shall forever remain a mystery.
 """
     }
 
@@ -564,9 +566,40 @@ part of the day's exertions are behind you, but it ain't over 'til it's over.
     }
 
 
+gtMissenden : Entry
+gtMissenden =
+    { title = "Great Missenden"
+    , mapImage = "images/Gt-Missenden-map.png"
+    , profileImage = "images/Gt-Missenden-profile.png"
+    , lunchStop = "Matilda's Bistro"
+    , distance = Length.kilometers 68.3
+    , climbing = Length.meters 418
+    , gpx = "gpx/Gt-Missenden.gpx"
+    , narrative = """
+Let's head out through Watford, from where we soon cross the M25 and pass through the lovely Sarrat
+with its church, pubs, coronation oak trees, and the bus shelter where you may find the mid-week
+pros deciding where to go. Bovingdon, where they film "The Wheel", apparently. Dive down into
+Chesham then haul yourself out the other side before descending again to lunch in Great Missenden, home
+to the Roald Dahl museum.
+
+It's shorter coming back but more countryside and historic towns await the passing of the blue train.
+Soon, you'll be back at Hatch End, with a comfy 42 miles notched up.
+"""
+    }
+
+
 content : List Entry
 content =
-    [ aldbury, windsor, beaconsfield, hertford, harpenden, nonstopPizzaRide, benson, wilstone ]
+    [ aldbury
+    , windsor
+    , beaconsfield
+    , gtMissenden
+    , hertford
+    , harpenden
+    , nonstopPizzaRide
+    , benson
+    , wilstone
+    ]
 
 
 withPreamble : Entry -> String
