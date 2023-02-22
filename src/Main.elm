@@ -556,12 +556,19 @@ harpenden =
     , climbing = Length.meters 618
     , gpx = "gpx/Harpenden.gpx"
     , narrative = """
-Hertfordshire is mainly fairly gentle rolling hills, with an occasional kick up. This route is
-basically that. Boring, it is not. As ever, we find the best lanes with peaceful dells and
-sweeping vistas (well, it's not Wyoming).
-
-Have a chill and chat at the Artisan coffe house that is Brew and Cru, knowing that the greater
-part of the day's exertions are behind you, but it ain't over 'til it's over.
+Hark! Hertfordshire, a land of gentle hills,
+With kicks occasional to give us thrills.
+This route, I say, is naught but that,
+Not dull, it be - I swear, that's fact!
+As we ride, we seek lanes of the best,
+With peaceful dells and views to arrest
+Our senses (though not as grand as Scotland's).
+Now, let us take our ease at Brew and Cru's Artisan,
+A coffee house that doth boast of such precision,
+And whilst we chat, know this - the day's great exertions,
+Are for the most part, behind us in subversion.
+But, let us not forget - it ain't over 'til it's done,
+Thus, let us onward ride until the setting of the sun.
 """
     }
 
@@ -576,14 +583,47 @@ gtMissenden =
     , climbing = Length.meters 418
     , gpx = "gpx/Gt-Missenden.gpx"
     , narrative = """
-Let's head out through Watford, from where we soon cross the M25 and pass through the lovely Sarrat
-with its church, pubs, coronation oak trees, and the bus shelter where you may find the mid-week
-pros deciding where to go. Bovingdon, where they film "The Wheel", apparently. Dive down into
-Chesham then haul yourself out the other side before descending again to lunch in Great Missenden, home
-to the Roald Dahl museum.
+Whilom, let us wend through Watford town,
+Whence anon we cross M25's renown,
+Through Sarrat fair with church and taverns gay,
+And coronation oaks that line the way,
+Where midweek pros gather, the bus shelter nigh,
+Deciding where to go under blue sky.
+To Bovingdon we may our steps incline,
+Where they film "The Wheel", a show divine.
+Down to Chesham we may our way pursue,
+And then out the other side renew,
+To Great Missenden we shall then repair,
+Home to Roald Dahl's museum rare.
+Homeward journey's shorter, yet withal,
+More countryside and towns historic shall enthrall,
+As blue train passes by with stately gait,
+Till Hatch End greets us, a comfy 42 miles we'll rate.
+"""
+    }
 
-It's shorter coming back but more countryside and historic towns await the passing of the blue train.
-Soon, you'll be back at Hatch End, with a comfy 42 miles notched up.
+
+marlow : Entry
+marlow =
+    { title = "Marlow"
+    , mapImage = "images/Marlow-map.png"
+    , profileImage = "images/Marlow-profile.png"
+    , lunchStop = "Cedar's Cafe"
+    , distance = Length.kilometers 88.6
+    , climbing = Length.meters 521
+    , gpx = "gpx/Marlow.gpx"
+    , narrative = """
+So, you're lookin' for a ride that'll get your blood pumpin' and your heart racin', eh?
+Well, let me tell ya, this one's got it all. We'll hit up some of the finest parts of them
+Chiltern hills, cross the Thames multiple times, and do some serious climbs and descents -
+all in just fifty five miles.
+
+And don't you worry 'bout how we've managed to fit all that in.
+It's all thanks to the "modularity" or "composability" of the Gregarios routes.
+Basically, it means we've taken decades of local know-how and distilled it down into some seriously kick-ass rides.
+
+So, get your gear on and saddle up, 'cause we're gonna have ourselves a real good time
+with your new pals - all decked out in similar duds, of course.
 """
     }
 
