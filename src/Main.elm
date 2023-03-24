@@ -532,7 +532,7 @@ henley =
     , climbing = Length.meters 754
     , gpx = "gpx/henley.gpx"
     , narrative = """Ah, the Chilterns, is it hilly? Come and find out, as we chuff-chuff the
-Blue Train out through Beaconsfield, down to Marlow, and up-up-up to Turvill Heath, from where
+Blue Train out through Beaconsfield, down to Marlow, and up-up-up to Turville Heath, from where
 we (quite literally) zoom down to the banks of Old Father Thames for some well-deserved lunch.
 A shorter afternoon ride back through Maidenhead, leafy lanes to Fulmer, and across the Colne
 Valley to base.
