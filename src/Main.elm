@@ -282,10 +282,39 @@ view model =
         ]
     <|
         column
-            [ width fill, spacing 20, padding 20 ]
-            [ sortOptions
-            , homeScreen model
+            [ width fill ]
+            [ banner
+            , column
+                [ width fill, spacing 20, padding 20 ]
+                [ sortOptions
+                , homeScreen model
+                ]
             ]
+
+
+banner =
+    row
+        [ width fill
+        , height (px 70)
+        , Background.color <| rgb255 28 68 192
+        , spacing 100
+        , Font.size 20
+        , Font.color white
+        ]
+        [ link []
+            { url = "http://gregarios.uk/"
+            , label =
+                image
+                    [ height (px 45)
+                    , centerY
+                    , paddingEach { left = 50, right = 0, top = 5, bottom = 5 }
+                    ]
+                    { src = "images/white-roundel_background.png"
+                    , description = "Home"
+                    }
+            }
+        , text "THE ROUTES"
+        ]
 
 
 type ButtonPosition
@@ -406,6 +435,39 @@ Chenies climb, then a main road blast back to Rickmansworth and then home again.
     }
 
 
+ardeley : Entry
+ardeley =
+    { title = "Ardeley"
+    , mapImage = "images/ardeley-map.png"
+    , profileImage = "images/ardeley-profile.png"
+    , lunchStop = "Church Farm"
+    , distance = Length.kilometers 124
+    , climbing = Length.meters 870
+    , gpx = "gpx/ardeley.gpx"
+    , narrative = """
+This ride takes us deep into Hertfordshire, just beyond Stevenage, to the rather lovely
+Church Farm at Ardeley. On the way, we shall pass through miles and miles of undulating
+farmland, nothing too challenging. Hertford provides a shorter alternative but, if the
+pace is right, and the wind is kind, this is one of the best days out you'll find."""
+    }
+
+
+puckeridge : Entry
+puckeridge =
+    { title = "Puckeridge"
+    , mapImage = "images/puckeridge-map.png"
+    , profileImage = "images/puckeridge-profile.png"
+    , lunchStop = "Something Lovely"
+    , distance = Length.kilometers 121
+    , climbing = Length.meters 873
+    , gpx = "gpx/puckeridge.gpx"
+    , narrative = """
+Another of our 'slightly longer' rides, visiting many of Hertfordshire's fine villages,
+this is a lovely Spring ride to the aptly-named Something Lovely tea rooms in Puckeridge
+for some fine cake and chat before a similar, but different, route home."""
+    }
+
+
 benson : Entry
 benson =
     { title = "Benson"
@@ -456,6 +518,24 @@ wooded places, but none too severe. The Forza route has more, and more, of the s
 The return route takes in the longish climb of Essendon, but not before you've got your legs working
 again with a nice long run along the river valley. The "old A1" is ideal for some "through and off" work
 later in the day, especially if the wind's against us.
+"""
+    }
+
+
+henley : Entry
+henley =
+    { title = "Henley"
+    , mapImage = "images/henley-map.png"
+    , profileImage = "images/henley-profile.png"
+    , lunchStop = "bebo Cafe"
+    , distance = Length.kilometers 121
+    , climbing = Length.meters 754
+    , gpx = "gpx/henley.gpx"
+    , narrative = """Ah, the Chilterns, is it hilly? Come and find out, as we chuff-chuff the
+Blue Train out through Beaconsfield, down to Marlow, and up-up-up to Turvill Heath, from where
+we (quite literally) zoom down to the banks of Old Father Thames for some well-deserved lunch.
+A shorter afternoon ride back through Maidenhead, leafy lanes to Fulmer, and across the Colne
+Valley to base.
 """
     }
 
@@ -631,14 +711,18 @@ with your new pals - all decked out in similar duds, of course.
 content : List Entry
 content =
     [ aldbury
+    , ardeley
     , windsor
     , beaconsfield
     , gtMissenden
     , hertford
     , harpenden
+    , marlow
     , nonstopPizzaRide
     , benson
     , wilstone
+    , puckeridge
+    , henley
     ]
 
 
