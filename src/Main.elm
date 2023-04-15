@@ -296,7 +296,7 @@ banner =
     row
         [ width fill
         , height (px 70)
-        , Background.color <| rgb255 28 68 192
+        , Background.color <| rgb255 51 91 197
         , spacing 100
         , Font.size 20
         , Font.color white
@@ -569,7 +569,7 @@ windsor =
     , lunchStop = "Cinnamon Cafe"
     , distance = Length.kilometers 97.8
     , climbing = Length.meters 509
-    , gpx = "gpx/windsor.gpx"
+    , gpx = "gpx/WINDSOR.gpx"
     , narrative = """
 Take up the call to adventure, my friend, and hie thee to Windsor's regal scene! And whilst there,
 sample a cinnamon bun at the café that bears the same name.
