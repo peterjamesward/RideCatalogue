@@ -202,7 +202,7 @@ view model =
                         , Font.color FlatColors.FlatUIPalette.wisteria
                         , Font.size 16
                         ]
-                        { url = entry.gpx
+                        { url = "gpx/" ++ entry.gpx
                         , label = text "Download GPX file"
                         , filename = entry.gpx
                         }
@@ -417,7 +417,7 @@ aldbury =
     , lunchStop = "The Musette"
     , distance = Length.miles 54
     , climbing = Length.meters 600
-    , gpx = "gpx/aldbury.gpx"
+    , gpx = "aldbury.gpx"
     , narrative = """
 One of the most popular Chiltern runs, not least because of the splendid location of The Musette,
 and its menu. There are many ways there and many ways back, but this route is neither too direct
@@ -443,7 +443,7 @@ ardeley =
     , lunchStop = "Church Farm"
     , distance = Length.kilometers 124
     , climbing = Length.meters 870
-    , gpx = "gpx/ardeley.gpx"
+    , gpx = "ardeley.gpx"
     , narrative = """
 This ride takes us deep into Hertfordshire, just beyond Stevenage, to the rather lovely
 Church Farm at Ardeley. On the way, we shall pass through miles and miles of undulating
@@ -460,7 +460,7 @@ puckeridge =
     , lunchStop = "Something Lovely"
     , distance = Length.kilometers 121
     , climbing = Length.meters 873
-    , gpx = "gpx/puckeridge.gpx"
+    , gpx = "puckeridge.gpx"
     , narrative = """
 Another of our 'slightly longer' rides, visiting many of Hertfordshire's fine villages,
 this is a lovely Spring ride to the aptly-named Something Lovely tea rooms in Puckeridge
@@ -476,7 +476,7 @@ benson =
     , lunchStop = "Waterfront Cafe"
     , distance = Length.kilometers 153
     , climbing = Length.meters 1592
-    , gpx = "gpx/Benson.gpx"
+    , gpx = "Benson.gpx"
     , narrative = """
 Oft-trodden path, Benson's ride, a quintessential treat,
 Weighty it is, nearly an imperial ton, far from petite,
@@ -507,7 +507,7 @@ hertford =
     , lunchStop = "bebo Cafe"
     , distance = Length.kilometers 87.6
     , climbing = Length.meters 600
-    , gpx = "gpx/Hertford_summer.gpx"
+    , gpx = "Hertford_summer.gpx"
     , narrative = """
 County town of the "County of Opportunities", Hertford has several pleasant hostelries, so it's long
 been a popular destination. It's also a gateway for some longer Herts rides, but that's another story.
@@ -530,7 +530,7 @@ henley =
     , lunchStop = "bebo Cafe"
     , distance = Length.kilometers 121
     , climbing = Length.meters 754
-    , gpx = "gpx/henley.gpx"
+    , gpx = "henley.gpx"
     , narrative = """Ah, the Chilterns, is it hilly? Come and find out, as we chuff-chuff the
 Blue Train out through Beaconsfield, down to Marlow, and up-up-up to Turville Heath, from where
 we (quite literally) zoom down to the banks of Old Father Thames for some well-deserved lunch.
@@ -548,7 +548,7 @@ beaconsfield =
     , lunchStop = "Costa Coffee"
     , distance = Length.kilometers 70
     , climbing = Length.meters 744
-    , gpx = "gpx/BEACONSFIELD.gpx"
+    , gpx = "BEACONSFIELD.gpx"
     , narrative = """
 This is a great step-up-from-Saturday ride, at 44 miles! We pootle out through Ricky and the 
 Chalfonts, up Winchmore Hill to Penn Street and then we're practically at our lunch stop before 
@@ -569,7 +569,7 @@ windsor =
     , lunchStop = "Cinnamon Cafe"
     , distance = Length.kilometers 97.8
     , climbing = Length.meters 509
-    , gpx = "gpx/WINDSOR.gpx"
+    , gpx = "WINDSOR.gpx"
     , narrative = """
 Take up the call to adventure, my friend, and hie thee to Windsor's regal scene! And whilst there,
 sample a cinnamon bun at the café that bears the same name.
@@ -596,7 +596,7 @@ wilstone =
     , lunchStop = "Cinnamon Cafe"
     , distance = Length.kilometers 93.3
     , climbing = Length.meters 900
-    , gpx = "gpx/wilstone.gpx"
+    , gpx = "wilstone.gpx"
     , narrative = """
 OK, it's not very different to the Aldbury route, but it's different enough, ok?
 Out through Oxhey and Moor Park, picking up riders along the way, Chenies, Chesham,
@@ -616,7 +616,7 @@ nonstopPizzaRide =
     , lunchStop = "Minori Pizzeria"
     , distance = Length.kilometers 68.5
     , climbing = Length.meters 410
-    , gpx = "gpx/pizza.gpx"
+    , gpx = "pizza.gpx"
     , narrative = """
 You want to get home to watch the soccer, mow the lawn, cook the dinner? This is the perfect ride
 for you. It's also the perfect ride if you want to relax post-ride and have a chat over pizza and
@@ -634,7 +634,7 @@ harpenden =
     , lunchStop = "Bebo Cafe"
     , distance = Length.kilometers 89.7
     , climbing = Length.meters 618
-    , gpx = "gpx/Harpenden.gpx"
+    , gpx = "Harpenden.gpx"
     , narrative = """
 Hark! Hertfordshire, a land of gentle hills,
 With kicks occasional to give us thrills.
@@ -661,7 +661,7 @@ gtMissenden =
     , lunchStop = "Matilda's Bistro"
     , distance = Length.kilometers 68.3
     , climbing = Length.meters 418
-    , gpx = "gpx/Gt-Missenden.gpx"
+    , gpx = "Gt-Missenden.gpx"
     , narrative = """
 Whilom, let us wend through Watford town,
 Whence anon we cross M25's renown,
@@ -691,7 +691,7 @@ marlow =
     , lunchStop = "Cedar's Cafe"
     , distance = Length.kilometers 88.6
     , climbing = Length.meters 521
-    , gpx = "gpx/Marlow.gpx"
+    , gpx = "Marlow.gpx"
     , narrative = """
 So, you're lookin' for a ride that'll get your blood pumpin' and your heart racin', eh?
 Well, let me tell ya, this one's got it all. We'll hit up some of the finest parts of them
