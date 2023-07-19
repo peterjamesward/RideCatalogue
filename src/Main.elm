@@ -499,6 +499,25 @@ To Hatch End, we'll return, our energy all but spent.
     }
 
 
+codicote : Entry
+codicote =
+    { title = "Codicote"
+    , mapImage = "images/Codicote-map.png"
+    , profileImage = "images/Codicote-profile.png"
+    , lunchStop = "Vanstones Garden Centre Cafe"
+    , distance = Length.kilometers 106
+    , climbing = Length.meters 800
+    , gpx = "Codicote.gpx"
+    , narrative = """
+Using sections of the legendary "Route 66" ride, this relentlessly rolling route takes out through
+the mid-week-pros spiritual home of Sarratt, thence Bovingdon and the descent into Hemel, which we
+cleverly circumvent by a loop up to Great Gaddesdon and continue north-eastwards through Redbourne
+and Harpenden until we reach the medieval market town of Codicote. Lunch is a couple of miles out of
+town, but well worth the detour. The shorter afternoon section is almost a straight line
+back to Hatch End, where "straight" has a special meaning to cyclists."""
+    }
+
+
 hertford : Entry
 hertford =
     { title = "Hertford"
@@ -604,6 +623,39 @@ Wigginton, down to Tring and thence Wilstone and the excellent P E Mead Farm Sho
 The route back is slightly to the east, taking in Berkhampstead, Bovingdon and Bucks Hill.
 Elsewhere, you'll find the optional "Chain Gang Loop" which makes good use of the flat
 landscape to put in a useful bit of practice riding in formation. Feels good.
+"""
+    }
+
+
+wendover : Entry
+wendover =
+    { title = "Wendover"
+    , mapImage = "images/wendover-map.png"
+    , profileImage = "images/wendover-profile.png"
+    , lunchStop = "Whitewaters Deli"
+    , distance = Length.kilometers 93.7
+    , climbing = Length.meters 700
+    , gpx = "wendover.gpx"
+    , narrative = """
+One of many variants of the Chess valley ride. Overall it's a good length at about 60 miles
+and moderate amounts of climbing, but with an interestingly placed climb up to the woods,
+right after lunch. We shall all take that very slowly, and it's "downhill all the way" after that.
+"""
+    }
+
+
+warrenRow : Entry
+warrenRow =
+    { title = "Warren Row"
+    , mapImage = "images/warrenrow-map.png"
+    , profileImage = "images/warrenrow-profile.png"
+    , lunchStop = "Velolife"
+    , distance = Length.kilometers 113
+    , climbing = Length.meters 670
+    , gpx = "warrenrow.gpx"
+    , narrative = """
+On those days when Marlow isn't quite enoughh, but Henley's a bit much, this hits the sweet spot.
+It's a mix of lumpy Chilterns outbound and Thames Valley flatter bits coming back. Your legs will like it.
 """
     }
 
@@ -723,6 +775,9 @@ content =
     , wilstone
     , puckeridge
     , henley
+    , codicote
+    , wendover
+    , warrenRow
     ]
 
 
