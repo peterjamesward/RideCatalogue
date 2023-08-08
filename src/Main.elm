@@ -627,6 +627,24 @@ landscape to put in a useful bit of practice riding in formation. Feels good.
     }
 
 
+wilstoneSummer : Entry
+wilstoneSummer =
+    { title = "Wilstone summer"
+    , mapImage = "images/Wilstone summer map.png"
+    , profileImage = "images/Wilstone summer profile.png"
+    , lunchStop = "P E Meads"
+    , distance = Length.kilometers 108
+    , climbing = Length.meters 730
+    , gpx = "Wilstone summer.gpx"
+    , narrative = """
+Take the winter Wilstone route, add in a good bit of chain-gang or paceline practice
+around a flattish loop, a rather lovely post-lunch climb up to Pavis Wood, and you have the
+makings of a memorable ride. That's what we've done for you. It's still only 108km
+but you'll be very pleased with yourself.
+"""
+    }
+
+
 wendover : Entry
 wendover =
     { title = "Wendover"
@@ -778,6 +796,7 @@ content =
     , codicote
     , wendover
     , warrenRow
+    , wilstoneSummer
     ]
 
 
